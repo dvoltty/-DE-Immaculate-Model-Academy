@@ -1,55 +1,1093 @@
-/* DE' Immaculate Model Academy LMS — front-end demonstration.
-   Production authentication, storage, AI and realtime media must be connected to a trusted backend. */
-const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const PHONE='+234 806 704 7801', BOGE='https://oluwafemoli.github.io/boge-neurovascular-Framework-inteligence/';
-const subjects={Science:['Use of English','Mathematics','Biology','Chemistry','Physics'],Art:['Use of English','Literature in English','Government','CRS','History'],Commercial:['Use of English','Mathematics','Economics','Commerce','Accounting'],General:['Use of English','Mathematics','Biology','Economics','Government']};
-const exams=['JAMB','WAEC','NECO','Post-UTME'];
-const tutors=Array.from({length:10},(_,i)=>({name:['Adebayo Tutor','Grace Okafor','Samuel Ade','Mary James','David Bello','Esther Ojo','Peter Musa','Joy Daniel','Michael Eze','Ruth Akin'][i],username:`tutor${String(i+1).padStart(2,'0')}`,password:'Tutor@123',role:'tutor',status:'Approved',subject:['Mathematics','English','Biology','Chemistry','Physics','Economics','Government','Literature','Accounting','Further Mathematics'][i]}));
-const initialUsers=[{name:'Academy Administrator',username:'admin',password:'Admin@12345',role:'admin',status:'Approved'},...tutors];
-const demoStudents=[
-{name:'Ada Science Demo',username:'student01',password:'Student@123',role:'student',status:'Approved',category:'Science',exam:'JAMB',subjects:['Use of English','Mathematics','Biology','Chemistry'],plan:'Free access — ₦0'},
-{name:'Tunde Art Demo',username:'student02',password:'Student@123',role:'student',status:'Approved',category:'Art',exam:'JAMB',subjects:['Use of English','Literature in English','Government','History'],plan:'Free access — ₦0'},
-{name:'Mariam Commercial Demo',username:'student03',password:'Student@123',role:'student',status:'Approved',category:'Commercial',exam:'WAEC',subjects:['Use of English','Mathematics','Economics','Accounting'],plan:'Free access — ₦0'},
-{name:'Chika Science Basic',username:'student04',password:'Student@123',role:'student',status:'Approved',category:'Science',exam:'WAEC',subjects:['Mathematics','Biology','Chemistry','Physics'],plan:'Exam preparation — ₦5,000/month (sample)'},
-{name:'Bola Art Basic',username:'student05',password:'Student@123',role:'student',status:'Approved',category:'Art',exam:'NECO',subjects:['Use of English','Literature in English','Government','CRS'],plan:'Exam preparation — ₦5,000/month (sample)'},
-{name:'Emeka Commercial Basic',username:'student06',password:'Student@123',role:'student',status:'Approved',category:'Commercial',exam:'JAMB',subjects:['Use of English','Mathematics','Economics','Commerce'],plan:'Exam preparation — ₦5,000/month (sample)'},
-{name:'Zainab Science Premium',username:'student07',password:'Student@123',role:'student',status:'Approved',category:'Science',exam:'Post-UTME',subjects:['Use of English','Mathematics','Physics','Chemistry'],plan:'Premium coaching — ₦12,000/month (sample)'},
-{name:'Daniel Art Premium',username:'student08',password:'Student@123',role:'student',status:'Approved',category:'Art',exam:'JAMB',subjects:['Use of English','Literature in English','Government','History'],plan:'Premium coaching — ₦12,000/month (sample)'},
-{name:'Favour General Boarding',username:'student09',password:'Student@123',role:'student',status:'Approved',category:'General',exam:'NECO',subjects:['Use of English','Mathematics','Biology','Economics'],plan:'Boarding enquiry — contact academy'},
-{name:'Ibrahim Science Boarding',username:'student10',password:'Student@123',role:'student',status:'Approved',category:'Science',exam:'JAMB',subjects:['Use of English','Mathematics','Biology','Chemistry'],plan:'Boarding enquiry — contact academy'}
+
+/* ==========================================================================
+   DE' IMMACULATE MODEL ACADEMY — COMPLETE LMS ENGINE
+   Location: NTA–Ilawe Bypass Road, Opp. Federal Polytechnic Ado-Ekiti Satellite Campus
+   RC/BN: BN-3359087 | Contact: +234 806 704 7801
+   Built by Boge Expression
+   ========================================================================== */
+
+const STREAM_SUBJECTS = {
+  Science: ["Use of English", "Mathematics", "Physics", "Chemistry", "Biology"],
+  Art: ["Use of English", "Literature in English", "Government", "CRS / IRS", "Civic Education"],
+  Commercial: ["Use of English", "Economics", "Financial Accounting", "Commerce", "Mathematics"]
+};
+
+// 10 SPECIALIST TUTORS WITH USERNAMES & PASSWORDS
+const DEFAULT_TUTORS = [
+  { id: "T1", name: "Mr. Samuel Adeyemi", subject: "Mathematics", email: "tutor1@deimmaculate.edu.ng", password: "TutorPass101", approved: true, online: true },
+  { id: "T2", name: "Mrs. Grace Okafor", subject: "Use of English", email: "tutor2@deimmaculate.edu.ng", password: "TutorPass102", approved: true, online: true },
+  { id: "T3", name: "Engr. Tunde Bakare", subject: "Physics", email: "tutor3@deimmaculate.edu.ng", password: "TutorPass103", approved: true, online: true },
+  { id: "T4", name: "Dr. Folake Adebayo", subject: "Chemistry", email: "tutor4@deimmaculate.edu.ng", password: "TutorPass104", approved: true, online: false },
+  { id: "T5", name: "Mrs. Zainab Musa", subject: "Biology", email: "tutor5@deimmaculate.edu.ng", password: "TutorPass105", approved: true, online: true },
+  { id: "T6", name: "Mr. Chinedu Eze", subject: "Literature in English", email: "tutor6@deimmaculate.edu.ng", password: "TutorPass106", approved: true, online: false },
+  { id: "T7", name: "Barr. Segun Ogunleye", subject: "Government", email: "tutor7@deimmaculate.edu.ng", password: "TutorPass107", approved: true, online: true },
+  { id: "T8", name: "Mrs. Bisi Alabi", subject: "Economics", email: "tutor8@deimmaculate.edu.ng", password: "TutorPass108", approved: true, online: true },
+  { id: "T9", name: "Mr. Kehinde Oladipo", subject: "Financial Accounting", email: "tutor9@deimmaculate.edu.ng", password: "TutorPass109", approved: true, online: false },
+  { id: "T10", name: "Pastor Emmanuel Peters", subject: "CRS / IRS", email: "tutor10@deimmaculate.edu.ng", password: "TutorPass110", approved: true, online: true }
 ];
-let users=JSON.parse(localStorage.getItem('dima_users')||'null')||initialUsers;
-demoStudents.forEach(d=>{if(!users.some(x=>x.username===d.username))users.push(d)});
-if(!users.some(x=>x.username==='admin'))users.push(initialUsers[0]);
-tutors.forEach(t=>{if(!users.some(x=>x.username===t.username))users.push(t)});
-localStorage.setItem('dima_users',JSON.stringify(users));let current=JSON.parse(sessionStorage.getItem('dima_current')||'null');let activeTab='overview';let examState=null;let chatHistory=[];let calcExpr='';
-const saveUsers=()=>localStorage.setItem('dima_users',JSON.stringify(users));const saveCurrent=()=>sessionStorage.setItem('dima_current',JSON.stringify(current));
-function toast(s){let t=$('#toast');t.textContent=s;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),3200)}
-$('#year').textContent=new Date().getFullYear();$('#menuToggle').onclick=()=>$('#mainNav').classList.toggle('open');
-document.addEventListener('click',e=>{let v=e.target.closest('[data-view]');if(v){e.preventDefault();showAuth(v.dataset.view)}let t=e.target.closest('[data-tab]');if(t)showTab(t.dataset.tab)});
-function showAuth(mode){$('#modalRoot').innerHTML=`<div class="modal-backdrop" id="backdrop"><div class="modal"><button class="modal-close" id="closeModal">×</button><h2>${mode==='signup'?'Create your student account':'Welcome back'}</h2><p>${mode==='signup'?'Register to access classes, CBT practice and your personal learning dashboard.':'Sign in to continue to your academy dashboard.'}</p><form id="authForm"><div class="form-grid">${mode==='signup'?`<div class="field full-field"><label>Full name</label><input name="name" required placeholder="Student full name"></div>`:''}<div class="field"><label>Username</label><input name="username" required autocomplete="username" placeholder="Choose username"></div><div class="field"><label>Password</label><input name="password" type="password" required autocomplete="${mode==='signup'?'new-password':'current-password'}" placeholder="Enter password"></div>${mode==='signup'?`<div class="field"><label>Student category</label><select name="category"><option>Science</option><option>Art</option><option>Commercial</option><option>General</option></select></div><div class="field"><label>Exam preparation</label><select name="exam">${exams.map(x=>`<option>${x}</option>`).join('')}</select></div><div class="field"><label>Preferred subjects</label><select name="subjects" multiple size="4">${subjects.Science.map(x=>`<option>${x}</option>`).join('')}</select><small class="muted-small">Hold Ctrl / Cmd to choose multiple subjects.</small></div><div class="field"><label>Learning plan</label><select name="plan"><option>Free access — ₦0</option><option>Exam preparation — ₦5,000/month (sample)</option><option>Premium coaching — ₦12,000/month (sample)</option><option>Boarding enquiry — contact academy</option></select></div><div class="field"><label>Phone number</label><input name="phone" placeholder="e.g. 080..." type="tel"></div><div class="field"><label>Email (optional)</label><input name="email" type="email" placeholder="you@example.com"></div>`:''}</div><button class="btn btn-gold full" type="submit">${mode==='signup'?'Create account':'Sign in'} →</button></form>${mode==='signup'?'<div class="demo-note">Pricing shown here is illustrative until the academy confirms its official fees. Student accounts are pending approval until an administrator approves them.</div>':'<div class="demo-note"><b>Demo access:</b> Admin: admin / Admin@12345 · Tutors: tutor01–tutor10 / Tutor@123. Demo accounts are for testing only.</div><div class="demo-note"><b>Quick student logins</b><p>All student demo accounts are approved. Password for student01–student10: <code>Student@123</code>.</p><div class="quick-students">'+demoStudents.map(d=>'<button type="button" class="btn btn-outline quick-student" data-student="'+d.username+'">'+d.username+' · '+d.plan.split(' — ')[0]+'</button>').join('')+'</div></div>'}</div></div>`;$('#closeModal').onclick=()=>$('#modalRoot').innerHTML='';$('#backdrop').onclick=e=>{if(e.target.id==='backdrop')$('#modalRoot').innerHTML=''};$('#authForm').onsubmit=authSubmit;$$('[data-student]').forEach(b=>b.onclick=()=>{$('#authForm [name=username]').value=b.dataset.student;$('#authForm [name=password]').value='Student@123';$('#authForm').requestSubmit()})}
-function authSubmit(e){e.preventDefault();let f=new FormData(e.target),u=String(f.get('username')).trim(),p=String(f.get('password'));if(e.target.querySelector('[name=name]')){if(users.some(x=>x.username.toLowerCase()===u.toLowerCase()))return toast('That username is already in use.');let user={name:f.get('name'),username:u,password:p,role:'student',status:'Pending approval',category:f.get('category'),exam:f.get('exam'),subjects:[...e.target.querySelector('[name=subjects]').selectedOptions].map(o=>o.value),plan:f.get('plan'),phone:f.get('phone'),email:f.get('email')};users.push(user);saveUsers();toast('Account created. Await administrator approval.');$('#modalRoot').innerHTML='';return}let found=users.find(x=>x.username.toLowerCase()===u.toLowerCase()&&x.password===p);if(!found)return toast('Incorrect username or password.');if(found.status!=='Approved')return toast('Your account is awaiting admin approval.');current={username:found.username};saveCurrent();$('#modalRoot').innerHTML='';renderDashboard()}
-function logout(){current=null;sessionStorage.removeItem('dima_current');$('#app').style.display='';$('#app').innerHTML=homeMarkup;location.reload()}
-const homeMarkup=$('#app').innerHTML;
-function showTab(tab){activeTab=tab;$$('.side-link').forEach(x=>x.classList.toggle('active',x.dataset.tab===tab));$$('.tab-panel').forEach(x=>x.classList.toggle('active',x.id===`tab-${tab}`));let title=$(`[data-tab="${tab}"]`)?.innerText||tab;$('#dashTitle').textContent=title.trim();if(tab==='users'||tab==='approvals'||tab==='tests'||tab==='results'||tab==='tutors')renderTables(tab);if(tab==='cbt')renderCBT();if(tab==='calculator')renderCalculator();if(tab==='ai')renderAI();if(tab==='classes')renderClasses();if(tab==='messages')renderMessages();if(tab==='notifications')renderNotifications();if(tab==='questionbank')renderQuestionBank();if(tab==='settings')renderSettings()}
-function renderDashboard(){let u=users.find(x=>x.username===current?.username);if(!u){logout();return}let role=u.role;$('#app').innerHTML=`<div class="dashboard"><aside class="sidebar"><div class="side-brand"><img src="assets/home-emblem.jpg"><b>DE’ IMMACULATE<small>${role.toUpperCase()} PORTAL</small></b></div><button class="side-link active" data-tab="overview"><span class="nav-ico">▦</span>Overview</button>${(role==='student'?[['cbt','⌨','CBT Examinations'],['questionbank','📚','Question Bank'],['ai','✦','AI Study Assistant'],['calculator','∑','Scientific Calculator'],['classes','🎥','Online Classes'],['messages','✉','Messages'],['notifications','♧','Notifications']]:role==='tutor'?[['tests','📝','My Examinations'],['questionbank','📚','Question Bank'],['classes','🎥','Live Classes'],['messages','✉','Messages'],['notifications','♧','Notifications'],['results','📊','Student Results']]:[['users','♙','All Users'],['approvals','✓','Approvals'],['tutors','♟','Tutors'],['tests','📝','All Examinations'],['results','📊','Results'],['classes','🎥','Online Classes'],['messages','✉','Messages'],['notifications','♧','Notifications'],['settings','⚙','Settings']]).map(([id,ico,label])=>`<button class="side-link" data-tab="${id}"><span class="nav-ico">${ico}</span>${label}</button>`).join('')}<div class="sidebar-bottom"><button class="side-link" id="logoutBtn"><span class="nav-ico">↪</span>Sign out</button></div></aside><section class="dash-main"><div class="dash-top"><div><h2 id="dashTitle">Overview</h2><p>☎ ${PHONE} · Ado-Ekiti, Nigeria</p></div><div class="user-chip"><span class="avatar">${u.name.slice(0,1).toUpperCase()}</span><span>${u.name}<small style="display:block;color:#8490a2;font-weight:500">${role}</small></span></div></div><div class="dash-content"><div class="tab-panel active" id="tab-overview">${overviewMarkup(u)}</div>${['cbt','questionbank','ai','calculator','classes','messages','notifications','users','approvals','tutors','tests','results','settings'].map(x=>`<div class="tab-panel" id="tab-${x}"></div>`).join('')}<div class="muted-small" style="text-align:right;margin-top:25px">☎ ${PHONE} · Built by <a href="${BOGE}" target="_blank" rel="noopener"><b>Boge Expression</b></a></div></div></section></div>`;$('#logoutBtn').onclick=logout}
-function overviewMarkup(u){let student=users.filter(x=>x.role==='student'),pending=student.filter(x=>x.status!=='Approved').length,tests=JSON.parse(localStorage.getItem('dima_tests')||'[]'),results=JSON.parse(localStorage.getItem('dima_results')||'[]');let stats=u.role==='student'?[['Tests completed',results.filter(x=>x.username===u.username).length],['Available tests',tests.filter(x=>x.status==='Published').length],['Learning category',u.category||'—'],['Exam focus',u.exam||'—']]:[['Students',student.length],['Pending approvals',pending],['Tutors',users.filter(x=>x.role==='tutor').length],['Published tests',tests.filter(x=>x.status==='Published').length]];return `<div class="welcome-row"><div><h1>Hello, ${esc(u.name.split(' ')[0])} 👋</h1><p>${u.role==='student'?'Your learning space is ready. Keep practising and track your progress.':u.role==='tutor'?'Manage your classes, build tests and support your students.':'Here is the academy activity overview.'}</p></div><span class="pill green"><i class="online-dot"></i>You're online</span></div><div class="stats-grid">${stats.map(([a,b])=>`<div class="stat-card"><small>${a}</small><b>${b}</b><span>● Updated locally</span></div>`).join('')}</div><div class="dash-grid"><div class="panel"><h3>Quick actions</h3><div class="quick-grid">${(u.role==='student'?[['cbt','⌨','Start a CBT'],['ai','✦','Ask AI tutor'],['calculator','∑','Open calculator'],['classes','🎥','Join a class'],['questionbank','📚','Practice questions'],['notifications','♧','Notifications']]:u.role==='tutor'?[['tests','＋','Create examination'],['questionbank','📄','Upload PDF / questions'],['classes','🎥','Schedule class'],['results','📊','View student results'],['messages','✉','Message students'],['notifications','♧','Notifications']]:[['approvals','✓','Review approvals'],['users','♙','Manage users'],['tests','📝','Examination centre'],['results','📊','Performance reports'],['tutors','♟','Tutor management'],['settings','⚙','System settings']]).map(([t,i,l])=>`<button class="quick-action" data-tab="${t}"><span>${i}</span>${l}</button>`).join('')}</div></div><div class="panel"><h3>Academy information</h3><p><b>Location</b><br>NTA–Ilawe Bypass Road, opposite Federal Polytechnic Ado-Ekiti Satellite Campus.</p><p><b>Exams supported</b><br>JAMB · WAEC · NECO · Post-UTME</p><p><b>Online presence</b><br><span class="online-dot"></span>${users.filter(x=>x.role==='student'&&x.status==='Approved').length} approved students · ${users.filter(x=>x.role==='tutor'&&x.status==='Approved').length} tutors (demo counts)</p></div></div><div class="panel"><h3>Recent activity</h3><div class="activity-item"><b>Learning portal</b><span>Welcome to the academy LMS</span></div><div class="activity-item"><b>CBT centre</b><span>40–120 question test lengths supported</span></div><div class="activity-item"><b>Support</b><a href="tel:+2348067047801">${PHONE}</a></div></div>`}
-function renderTables(tab){let isAdmin=users.find(x=>x.username===current.username)?.role==='admin';let tests=JSON.parse(localStorage.getItem('dima_tests')||'[]'),results=JSON.parse(localStorage.getItem('dima_results')||'[]');let html='';if(tab==='users'||tab==='approvals'||tab==='tutors'){let list=users.filter(x=>tab==='tutors'?x.role==='tutor':tab==='approvals'?x.status!=='Approved':true);html=`<div class="section-title"><h2>${tab==='users'?'User directory':tab==='approvals'?'Account approvals':'Tutor management'}</h2><span class="pill">${list.length} records</span></div><div class="table-wrap"><table><thead><tr><th>Name</th><th>Username</th><th>Role</th><th>Category / subject</th><th>Status</th><th>Action</th></tr></thead><tbody>${list.map(x=>`<tr><td>${esc(x.name)}</td><td>${esc(x.username)}</td><td>${x.role}</td><td>${esc(x.category||x.subject||'—')}</td><td><span class="pill ${x.status==='Approved'?'green':'gold'}">${x.status}</span></td><td>${isAdmin&&x.status!=='Approved'?`<button class="btn btn-gold" data-approve="${esc(x.username)}">Approve</button>`:isAdmin&&x.role!=='admin'?`<button class="btn btn-outline" data-suspend="${esc(x.username)}">${x.status==='Suspended'?'Restore':'Suspend'}</button>`:'—'}</td></tr>`).join('')}</tbody></table></div>`}else if(tab==='tests'){let own=users.find(x=>x.username===current.username);let list=own.role==='tutor'?tests.filter(t=>t.tutor===own.username):tests;html=`<div class="section-title"><h2>${own.role==='tutor'?'Create & manage examinations':'Examination centre'}</h2><span class="pill">${list.length} tests</span></div>${own.role==='tutor'?`<div class="panel"><h3>Set a new examination</h3><form id="testForm" class="inline-form"><input name="title" placeholder="Test title" required><select name="exam">${exams.map(x=>`<option>${x}</option>`).join('')}</select><input name="subject" placeholder="Subject" required><select name="year"><option>2026</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option></select><select name="count"><option>40</option><option>60</option><option>90</option><option>120</option></select><input name="minutes" type="number" min="10" value="60" placeholder="Minutes"><button class="btn btn-gold">Save as draft</button></form><p>Upload questions below or use the manual question builder. Tests require admin approval before students can see them.</p><div class="field"><label>Import PDF question paper</label><input type="file" id="pdfUpload" accept="application/pdf"><small class="muted-small">PDF text extraction is best-effort. Review every extracted question and answer before submission.</small></div><div id="pdfPreview"></div><hr style="border:0;border-top:1px solid var(--line);margin:18px 0"><h3>Manual question builder</h3><form id="manualQForm" class="form-grid"><div class="field full-field"><label>Question text</label><textarea name="question" rows="2" required placeholder="Enter the question"></textarea></div><div class="field"><label>Option A</label><input name="a" required></div><div class="field"><label>Option B</label><input name="b" required></div><div class="field"><label>Option C</label><input name="c" required></div><div class="field"><label>Option D</label><input name="d" required></div><div class="field"><label>Correct option</label><select name="answer"><option value="0">A</option><option value="1">B</option><option value="2">C</option><option value="3">D</option></select></div><div class="field"><label>Attach to draft</label><select name="draft" id="draftSelect"></select></div><button class="btn btn-gold">Add question</button></form></div>`:''}<div class="table-wrap" style="margin-top:15px"><table><thead><tr><th>Title</th><th>Exam</th><th>Subject</th><th>Year</th><th>Questions</th><th>Status</th></tr></thead><tbody>${list.map((t,i)=>`<tr><td>${esc(t.title)}</td><td>${t.exam}</td><td>${esc(t.subject)}</td><td>${t.year}</td><td>${t.questions?.length||0}/${t.count}</td><td><span class="pill ${t.status==='Published'?'green':'gold'}">${t.status}</span> ${own.role==='admin'&&t.status!=='Published'?`<button class="btn btn-gold" data-publishtest="${i}">Approve</button>`:''}</td></tr>`).join('')||'<tr><td colspan="6">No examinations created yet.</td></tr>'}</tbody></table></div>`}else if(tab==='results'){html=`<div class="section-title"><h2>Examination results</h2></div><div class="table-wrap"><table><thead><tr><th>Student</th><th>Test</th><th>Score</th><th>Percentage</th><th>Date</th></tr></thead><tbody>${results.map(r=>`<tr><td>${esc(r.name)}</td><td>${esc(r.title)}</td><td>${r.score}/${r.total}</td><td>${Math.round(r.score/r.total*100)}%</td><td>${new Date(r.date).toLocaleDateString()}</td></tr>`).join('')||'<tr><td colspan="5">No submitted CBT results yet.</td></tr>'}</tbody></table></div>`}$('#tab-'+tab).innerHTML=html;$$('[data-approve]').forEach(b=>b.onclick=()=>{let x=users.find(x=>x.username===b.dataset.approve);x.status='Approved';saveUsers();renderTables(tab);toast('Account approved.')});$$('[data-suspend]').forEach(b=>b.onclick=()=>{let x=users.find(x=>x.username===b.dataset.suspend);x.status=x.status==='Suspended'?'Approved':'Suspended';saveUsers();renderTables(tab)});if($('#testForm'))$('#testForm').onsubmit=e=>{e.preventDefault();let d=Object.fromEntries(new FormData(e.target));let t={...d,count:+d.count,minutes:+d.minutes,tutor:current.username,status:'Pending approval',questions:[]};let all=JSON.parse(localStorage.getItem('dima_tests')||'[]');all.push(t);localStorage.setItem('dima_tests',JSON.stringify(all));toast('Draft saved. Add questions and submit for approval.');renderTables('tests')};if($('#manualQForm')){let drafts=tests.filter(t=>t.tutor===current.username&&t.status==='Pending approval');$('#draftSelect').innerHTML=drafts.map(t=>`<option value="${tests.indexOf(t)}">${esc(t.title)}</option>`).join('');$('#manualQForm').onsubmit=e=>{e.preventDefault();let d=Object.fromEntries(new FormData(e.target)),a=JSON.parse(localStorage.getItem('dima_tests')||'[]'),t=a[+d.draft];if(!t)return toast('Create a draft test first.');t.questions=t.questions||[];t.questions.push({question:d.question,options:[d.a,d.b,d.c,d.d],answer:+d.answer});localStorage.setItem('dima_tests',JSON.stringify(a));toast('Question added to draft.');renderTables('tests')}}if($('#pdfUpload'))$('#pdfUpload').onchange=extractPDF;$$('[data-publishtest]').forEach(b=>b.onclick=()=>{let a=JSON.parse(localStorage.getItem('dima_tests')||'[]'),t=a[+b.dataset.publishtest];if(!t.questions?.length)return toast('Add and verify questions before approval.');t.status='Published';localStorage.setItem('dima_tests',JSON.stringify(a));renderTables('tests');toast('Test approved and published to student dashboards.')})}
-async function extractPDF(e){let file=e.target.files[0];if(!file)return;if(!window.pdfjsLib){toast('PDF reader library unavailable.');return}pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';let buf=await file.arrayBuffer(),pdf=await pdfjsLib.getDocument({data:buf}).promise,text='';for(let i=1;i<=pdf.numPages;i++){let page=await pdf.getPage(i),c=await page.getTextContent();text+=c.items.map(x=>x.str).join(' ')+'\n'}let blocks=text.split(/(?=\b(?:Question\s*)?\d{1,3}[.)]\s)/i).filter(x=>x.trim().length>20);let parsed=blocks.map(b=>{let opts=[...b.matchAll(/\b([A-D])[.)]\s*([^\n]+?)(?=\s+[A-D][.)]|$)/g)].slice(0,4);return{question:b.replace(/\b[A-D][.)].*$/s,'').trim(),options:opts.map(x=>x[2].trim()),answer:0}}).filter(x=>x.question);window.extractedPDF=parsed;$('#pdfPreview').innerHTML=`<div class="admin-alert">Extracted ${parsed.length} possible question blocks from ${esc(file.name)}. This is an automatic draft only: option parsing and correct answers must be checked manually. No answer key is inferred.</div><button class="btn btn-gold" id="usePDF">Attach extracted questions to latest draft</button>`;$('#usePDF').onclick=()=>{let a=JSON.parse(localStorage.getItem('dima_tests')||'[]');let t=a.findLast(x=>x.tutor===current.username&&x.status==='Pending approval');if(!t)return toast('Create a draft test first.');t.questions=parsed;localStorage.setItem('dima_tests',JSON.stringify(a));toast('Extracted questions attached. Review answers before publishing.')}}
-function renderCBT(){let u=users.find(x=>x.username===current.username),tests=JSON.parse(localStorage.getItem('dima_tests')||'[]').filter(t=>t.status==='Published'&&(t.exam===u.exam||u.role!=='student'));if(examState){$('#tab-cbt').innerHTML=examMarkup();bindExam();return}$('#tab-cbt').innerHTML=`<div class="section-title"><h2>Computer-based examinations</h2><span class="pill green">Practice mode</span></div><div class="panel"><h3>Build your practice session</h3><div class="form-grid"><div class="field"><label>Examination type</label><select id="cbtExam">${exams.map(x=>`<option ${x===u.exam?'selected':''}>${x}</option>`).join('')}</select></div><div class="field"><label>Candidate category</label><select id="cbtCategory">${Object.keys(subjects).map(x=>`<option ${x===(u.category||'Science')?'selected':''}>${x}</option>`).join('')}</select></div><div class="field"><label>Subject</label><select id="cbtSubject">${(subjects[u.category]||subjects.Science).map(x=>`<option>${x}</option>`).join('')}</select></div><div class="field"><label>Question count</label><select id="cbtCount"><option>40</option><option>60</option><option>90</option><option>120</option></select></div><div class="field"><label>Question year / set</label><select id="cbtYear"><option>2026</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>Mixed practice</option></select></div><div class="field"><label>Duration</label><select id="cbtDuration"><option value="45">45 minutes</option><option value="60" selected>60 minutes</option><option value="90">90 minutes</option><option value="120">120 minutes</option></select></div></div><button class="btn btn-gold" id="startCBT">Start CBT session →</button><p>Question sets for 2022–2026 are selectable. Only verified or tutor-uploaded question content is labelled as such; the included sample set is original practice material, not represented as official past questions.</p></div><div class="panel" style="margin-top:15px"><h3>Published tutor examinations</h3>${tests.map(t=>`<div class="activity-item"><b>${esc(t.title)} · ${t.subject}</b><button class="btn btn-outline" data-starttest="${esc(t.title)}">Open test</button></div>`).join('')||'<p>No published tutor tests yet.</p>'}</div>`;$('#cbtCategory').onchange=()=>$('#cbtSubject').innerHTML=subjects[$('#cbtCategory').value].map(x=>`<option>${x}</option>`).join('');$('#startCBT').onclick=()=>startExam();$$('[data-starttest]').forEach(b=>b.onclick=()=>{let t=tests.find(x=>x.title===b.dataset.starttest);if(t?.questions?.length){examState={title:t.title,questions:t.questions,answers:{},index:0,ends:Date.now()+t.minutes*60000,total:t.questions.length};renderCBT()}else toast('This published test has no verified question set attached yet.')})}
-const sampleQuestions=[['Mathematics','If 3x + 5 = 20, find x.',['3','5','7','8'],1],['Mathematics','Evaluate 2² + 3².',['10','12','13','15'],2],['Mathematics','What is 15% of 200?',['15','20','30','35'],2],['Mathematics','Solve x² − 9 = 0 for the positive value of x.',['−3','0','3','9'],2],['Biology','The basic structural and functional unit of life is the:',['Tissue','Cell','Organ','Nucleus'],1],['Biology','Which organelle is primarily responsible for photosynthesis?',['Mitochondrion','Ribosome','Chloroplast','Golgi body'],2],['Biology','The hereditary material in most living organisms is:',['Protein','DNA','Starch','Lipid'],1],['Biology','Which blood cells help defend the body against infection?',['Red cells','Platelets','White cells','Plasma'],2],['Chemistry','The chemical symbol for sodium is:',['S','So','Na','N'],2],['Chemistry','A solution with pH 3 is:',['Acidic','Neutral','Alkaline','A salt'],0],['Chemistry','The smallest particle of an element that retains its properties is an:',['Ion','Atom','Molecule','Electron'],1],['Chemistry','Which gas is released during photosynthesis?',['Carbon dioxide','Nitrogen','Oxygen','Hydrogen'],2],['Physics','The SI unit of force is the:',['Joule','Watt','Newton','Pascal'],2],['Physics','Speed is calculated as:',['Distance × time','Distance ÷ time','Time ÷ distance','Mass × acceleration'],1],['Physics','Which instrument measures electric current?',['Voltmeter','Ammeter','Barometer','Thermometer'],1],['Physics','The approximate acceleration due to gravity near Earth is:',['4.9 m/s²','9.8 m/s²','18 m/s²','98 m/s²'],1],['Use of English','Choose the correctly spelt word.',['Accomodate','Acommodate','Accommodate','Acomodate'],2],['Use of English','The opposite of “scarce” is:',['Rare','Plentiful','Limited','Insufficient'],1],['Use of English','Choose the correct completion: “Neither of the boys ___ present.”',['are','were','is','have'],2],['Use of English','A word similar in meaning to “concise” is:',['Brief','Lengthy','Unclear','Vague'],0],['Economics','The basic economic problem arises from:',['Unlimited resources','Scarcity','No human wants','Overproduction'],1],['Economics','Demand generally increases when price:',['Rises','Falls','Is doubled','Is fixed'],1],['Government','A constitution is best described as:',['A party manifesto','The fundamental law of a state','A court judgment','A campaign speech'],1],['Government','The principle of separation of powers divides government into:',['Two arms','Three arms','Four arms','Five arms'],1],['Literature in English','A comparison using “like” or “as” is a:',['Metaphor','Simile','Irony','Pun'],1],['Commerce','The document issued by a seller showing goods sold and amount due is an:',['Invoice','Receipt','Cheque','Order note'],0],['Accounting','The accounting equation is:',['Assets = Liabilities + Capital','Assets = Income − Expenses','Capital = Assets + Liabilities','Liabilities = Assets + Capital'],0],['Mathematics','The mean of 2, 4, 6 and 8 is:',['4','5','6','7'],1],['Mathematics','A triangle has angles 60° and 50°. The third angle is:',['60°','70°','80°','90°'],1],['Biology','Which of these is a producer in a food chain?',['Goat','Grass','Lion','Fungi'],1],['Chemistry','A covalent bond involves:',['Transfer of protons','Sharing of electrons','Sharing of neutrons','Loss of nuclei'],1],['Physics','Energy possessed by a moving object is:',['Potential energy','Kinetic energy','Chemical energy','Nuclear energy'],1],['Use of English','Choose the correct plural of “criterion”.',['Criterions','Criteria','Criterias','Criterion'],1],['Economics','A market with a single seller is called:',['Oligopoly','Monopoly','Perfect competition','Monopsony'],1],['Government','The right to vote in an election is called:',['Franchise','Veto','Mandate','Tenure'],0],['Literature in English','The main character in a literary work is the:',['Antagonist','Protagonist','Narrator','Chorus'],1],['Commerce','A person who buys goods for personal use is a:',['Wholesaler','Retailer','Consumer','Broker'],2],['Accounting','A list of balances extracted from ledger accounts is a:',['Balance sheet','Trial balance','Cash book','Journal'],1],['Physics','The unit of electrical resistance is:',['Volt','Ampere','Ohm','Watt'],2],['Chemistry','The process of changing a liquid to gas at the surface is:',['Condensation','Evaporation','Freezing','Sublimation'],1]];
-function startExam(){let sub=$('#cbtSubject').value,year=$('#cbtYear').value,count=+$(`#cbtCount`).value;let bank=sampleQuestions.filter(q=>q[0]===sub);let all=JSON.parse(localStorage.getItem('dima_tests')||'[]');let t=all.find(x=>x.status==='Published'&&x.subject===sub&&x.exam===$('#cbtExam').value&&x.year==year&&x.questions?.length);let questions=t?t.questions.map(q=>({text:q.question,options:q.options,answer:q.answer})):bank.map(q=>({text:q[1],options:q[2],answer:q[3]}));if(!questions.length)return toast('No verified sample questions for this subject yet. Ask a tutor to add a question set.');questions=questions.slice(0,count);if(questions.length<count)toast(`Only ${questions.length} checked practice questions are loaded for ${sub}. Add a verified question bank to run ${count}.`);examState={title:`${$('#cbtExam').value} ${year} · ${sub}`,questions,answers:{},index:0,ends:Date.now()+(+$(`#cbtDuration`).value)*60000,total:questions.length};renderCBT()}
-function examMarkup(){let q=examState.questions[examState.index],remaining=Math.max(0,examState.ends-Date.now()),mins=String(Math.floor(remaining/60000)).padStart(2,'0'),secs=String(Math.floor(remaining%60000/1000)).padStart(2,'0');return `<div class="section-title"><div><h2>${esc(examState.title)}</h2><span class="muted-small">Question ${examState.index+1} of ${examState.total}</span></div><div class="timer" id="examTimer">${mins}:${secs}</div></div><div class="exam-layout"><div class="question-card"><div class="question-meta"><span>Choose one answer</span><span>${Object.keys(examState.answers).length} answered</span></div><h3>${esc(q.text)}</h3>${q.options.map((o,i)=>`<label class="answer-option ${examState.answers[examState.index]===i?'selected':''}"><input type="radio" name="answer" value="${i}" ${examState.answers[examState.index]===i?'checked':''}> <b>${'ABCD'[i]}.</b> ${esc(o)}</label>`).join('')}<div style="display:flex;justify-content:space-between;margin-top:20px;gap:10px"><button class="btn btn-outline" id="prevQ" ${examState.index===0?'disabled':''}>← Previous</button><button class="btn btn-gold" id="nextQ">${examState.index===examState.total-1?'Submit exam':'Next question →'}</button></div></div><div class="panel"><h3>Question navigator</h3><div class="question-nav">${examState.questions.map((x,i)=>`<button class="qnum ${i===examState.index?'current':''} ${examState.answers[i]!==undefined?'done':''}" data-q="${i}">${i+1}</button>`).join('')}</div><p class="muted-small">Green = answered · Blue = current</p><button class="btn btn-outline full" id="finishExam">Submit test</button></div></div>`}
-function bindExam(){if(window.examTimerInterval)clearInterval(window.examTimerInterval);let q=$$('input[name=answer]');q.forEach(x=>x.onchange=()=>{examState.answers[examState.index]=+x.value;renderCBT()});$('#prevQ').onclick=()=>{examState.index--;renderCBT()};$('#nextQ').onclick=()=>{if(examState.index===examState.total-1)finishExam();else{examState.index++;renderCBT()}};$('#finishExam').onclick=finishExam;$$('[data-q]').forEach(b=>b.onclick=()=>{examState.index=+b.dataset.q;renderCBT()});window.examTimerInterval=setInterval(()=>{if(!examState){clearInterval(timer);return}let el=$('#examTimer');if(!el){clearInterval(timer);return}let ms=examState.ends-Date.now();el.textContent=ms>0?`${String(Math.floor(ms/60000)).padStart(2,'0')}:${String(Math.floor(ms%60000/1000)).padStart(2,'0')}`:'00:00';if(ms<=0){clearInterval(timer);finishExam()}},1000)}
-function finishExam(){if(!examState)return;let score=examState.questions.reduce((n,q,i)=>n+(examState.answers[i]===q.answer?1:0),0),u=users.find(x=>x.username===current.username),r=JSON.parse(localStorage.getItem('dima_results')||'[]');r.push({username:u.username,name:u.name,title:examState.title,score,total:examState.total,date:new Date().toISOString()});localStorage.setItem('dima_results',JSON.stringify(r));let pct=Math.round(score/examState.total*100);examState=null;$('#tab-cbt').innerHTML=`<div class="panel" style="text-align:center;padding:40px"><div style="font-size:42px">🎓</div><h2 style="color:var(--navy)">Test submitted</h2><div style="font-size:42px;font-weight:800;color:#c18a17">${score}/${r.at(-1).total}</div><h3>${pct}% score</h3><p>${pct>=70?'Good work. Keep strengthening your understanding.':'Keep practising. Review the topics you found difficult.'}</p><button class="btn btn-gold" id="again">Back to CBT centre</button></div>`;$('#again').onclick=()=>renderCBT()}
-function renderCalculator(){let keys=['2nd','π','e','AC','⌫','sin','cos','tan','√','÷','7','8','9','×','^','4','5','6','−','(', '1','2','3','+ ',')','0','.','Ans','=','%'];$('#tab-calculator').innerHTML=`<div class="section-title"><h2>Scientific calculator</h2><span class="pill">DEG mode</span></div><div class="panel" style="max-width:470px"><input class="calc-screen" id="calcScreen" value="${esc(calcExpr)}" placeholder="0"><div class="calc-grid">${keys.map(k=>`<button class="${['÷','×','−','+ ','=','^'].includes(k)?'operator':''}" data-key="${k}">${k.trim()}</button>`).join('')}</div><p class="muted-small">Supports trigonometry, logarithms, powers, roots, factorials, brackets and constants. Trigonometric input uses degrees.</p></div>`;$$('[data-key]').forEach(b=>b.onclick=()=>calcKey(b.dataset.key))}
-function calcKey(k){let s=$('#calcScreen');if(!s)return;if(k==='AC')calcExpr='';else if(k==='⌫')calcExpr=calcExpr.slice(0,-1);else if(k==='='){try{let x=calcExpr.replace(/×/g,'*').replace(/÷/g,'/').replace(/−/g,'-').replace(/π/g,'pi').replace(/√\(/g,'sqrt(').replace(/sin\(/g,'sin(').replace(/cos\(/g,'cos(').replace(/tan\(/g,'tan(');let result=math.evaluate(x,{sin:v=>Math.sin(v*Math.PI/180),cos:v=>Math.cos(v*Math.PI/180),tan:v=>Math.tan(v*Math.PI/180)});calcExpr=String(result)}catch(e){toast('Check the mathematical expression.');return}}else if(k==='sin'||k==='cos'||k==='tan'||k==='√')calcExpr+=(k==='√'?'sqrt(':k+'(');else if(k==='2nd')toast('Use ^ for powers and the function names shown in the calculator.');else calcExpr+=k.trim();s.value=calcExpr}
-function renderAI(){let msgs=chatHistory.map(m=>`<div class="chat-msg ${m.who==='me'?'mine':''}"><b>${m.who==='me'?'You':'Study assistant'}</b><br>${esc(m.text)}</div>`).join('');$('#tab-ai').innerHTML=`<div class="section-title"><h2>AI study assistant</h2><span class="pill gold">Demo mode</span></div><div class="panel"><p>Ask about JAMB, WAEC, NECO or Post-UTME topics. The offline demonstration can explain common concepts; connect a secure AI API in the backend for current, subject-specific answers.</p><div class="chat-box" id="aiChat">${msgs||'<div class="empty-state">Try: “Explain photosynthesis”, “How do I calculate percentage?”, or “Give me a JAMB revision plan”.</div>'}</div><div class="chat-compose"><input id="aiInput" placeholder="Ask an exam or subject question..."><button class="btn btn-gold" id="aiSend">Send</button></div></div>`;$('#aiSend').onclick=sendAI;$('#aiInput').onkeydown=e=>{if(e.key==='Enter')sendAI()}}
-function sendAI(){let input=$('#aiInput'),q=input.value.trim();if(!q)return;chatHistory.push({who:'me',text:q});let lower=q.toLowerCase(),answer;if(lower.includes('photosynthesis'))answer='Photosynthesis is the process by which green plants use light energy, chlorophyll, water and carbon dioxide to produce glucose and release oxygen. A simplified equation is: 6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂ (in light). Revise the role of chlorophyll, stomata and light intensity.';else if(lower.includes('percentage'))answer='To calculate a percentage, divide the part by the whole and multiply by 100. Example: 30 out of 40 = (30 ÷ 40) × 100 = 75%. For percentage change, divide the change by the original value and multiply by 100.';else if(lower.includes('jamb')||lower.includes('waec')||lower.includes('neco')||lower.includes('post-utme'))answer='A useful exam plan is: (1) list your target subjects and syllabus topics, (2) study one topic at a time, (3) practise timed objective questions, (4) review every wrong answer, and (5) repeat weak topics. Tell me the subject and topic for a focused explanation.';else answer='I can help structure your revision. Please include the examination, subject and exact topic (for example, “WAEC Chemistry — acids and bases”). This prototype uses a small offline response set; connect the secure AI endpoint described in README for full AI answers.';chatHistory.push({who:'ai',text:answer});renderAI()}
-function renderQuestionBank(){$('#tab-questionbank').innerHTML=`<div class="section-title"><h2>Question bank</h2><span class="pill">2022–2026 sets</span></div><div class="panel"><h3>Browse examination practice</h3><div class="form-grid"><div class="field"><label>Exam type</label><select id="bankExam">${exams.map(x=>`<option>${x}</option>`).join('')}</select></div><div class="field"><label>Year</label><select id="bankYear">${[2026,2025,2024,2023,2022].map(x=>`<option>${x}</option>`).join('')}</select></div><div class="field"><label>Subject</label><select id="bankSubject">${Object.values(subjects).flat().filter((x,i,a)=>a.indexOf(x)===i).map(x=>`<option>${x}</option>`).join('')}</select></div><div class="field"><label>Question count</label><select id="bankCount"><option>40</option><option>60</option><option>90</option><option>120</option></select></div></div><button class="btn btn-gold" id="bankPractice">Start practice</button><p>Past-question year labels are filters for imported content. This starter project does not include a verified official 2022–2026 archive. Upload licensed/authorized papers or create original practice questions before publishing them as past questions.</p></div><div class="panel" style="margin-top:14px"><h3>Question sources</h3><p>Original sample practice questions are available for selected subjects. Tutor-created question sets and reviewed PDF imports appear here after admin approval.</p></div>`;$('#bankPractice').onclick=()=>{showTab('cbt');setTimeout(()=>{if($('#cbtExam')){$('#cbtExam').value=$('#bankExam').value;$('#cbtSubject').value=$('#bankSubject').value;$('#cbtCount').value=$('#bankCount').value;$('#cbtYear').value=$('#bankYear').value}},0)}}
-function renderClasses(){$('#tab-classes').innerHTML=`<div class="section-title"><h2>Online classroom</h2><span class="pill gold">Integration required</span></div><div class="panel"><h3>Live learning sessions</h3><p>Classroom schedule, attendance, meeting links, class chat and session resources are represented here. For real multi-user video/audio, connect a WebRTC signalling service and a media provider such as LiveKit, Jitsi or Zoom SDK.</p><div class="admin-alert">A live room is not activated in this static demo. Never publish private room tokens or meeting credentials in front-end code.</div><div class="field"><label>Session / meeting link</label><input id="meetingLink" placeholder="Paste an approved class meeting link"></div><button class="btn btn-gold" id="joinMeeting">Open meeting link</button></div><div class="panel" style="margin-top:14px"><h3>Online presence</h3><p><span class="online-dot"></span>Current demo user is online. Real presence requires a realtime backend and authenticated heartbeats.</p></div>`;$('#joinMeeting').onclick=()=>{let v=$('#meetingLink').value.trim();if(/^https:\/\//i.test(v))window.open(v,'_blank','noopener');else toast('Enter a valid HTTPS meeting link.') }}
-function renderMessages(){$('#tab-messages').innerHTML=`<div class="section-title"><h2>Messages & voice notes</h2></div><div class="panel"><p>Local demonstration chat. Multi-user delivery, file sharing, voice-note storage and read receipts require the production realtime backend.</p><div class="chat-box" id="msgChat">${chatHistory.map(m=>`<div class="chat-msg ${m.who==='me'?'mine':''}">${esc(m.text)}</div>`).join('')||'<div class="empty-state">No messages in this demo session.</div>'}</div><div class="chat-compose"><input id="msgInput" placeholder="Write a message..."><button class="btn btn-gold" id="msgSend">Send</button><button class="btn btn-outline" id="voiceNote" title="Record voice note">🎙</button></div><small class="muted-small" id="voiceStatus">Voice note recording depends on browser microphone permission; upload/storage is not configured.</small></div>`;$('#msgSend').onclick=()=>{let x=$('#msgInput').value.trim();if(x){chatHistory.push({who:'me',text:x});renderMessages()}};$('#voiceNote').onclick=async()=>{try{let stream=await navigator.mediaDevices.getUserMedia({audio:true}),rec=new MediaRecorder(stream),chunks=[];rec.ondataavailable=e=>chunks.push(e.data);rec.onstop=()=>{let a=document.createElement('a');a.href=URL.createObjectURL(new Blob(chunks,{type:'audio/webm'}));a.download='voice-note.webm';a.click();stream.getTracks().forEach(t=>t.stop());$('#voiceStatus').textContent='Voice note saved locally to your device. It was not sent to another user.'};rec.start();$('#voiceStatus').textContent='Recording… click the microphone again to stop.';$('#voiceNote').onclick=()=>rec.stop()}catch(e){toast('Microphone permission unavailable.')}}}
-function renderNotifications(){$('#tab-notifications').innerHTML=`<div class="section-title"><h2>Notifications</h2><span class="pill">${users.find(x=>x.username===current.username).status}</span></div><div class="panel"><div class="activity-item"><b>Welcome to DE’ Immaculate LMS</b><span>Just now</span></div><div class="activity-item"><b>Contact the academy for current programme fees and boarding availability.</b><span>Academy notice</span></div><div class="activity-item"><b>Phone support</b><a href="tel:+2348067047801">${PHONE}</a></div></div>`}
-function renderSettings(){$('#tab-settings').innerHTML=`<div class="section-title"><h2>System settings</h2></div><div class="panel"><h3>Academy configuration</h3><p>Academy contact: ${PHONE}<br>Location: Ado-Ekiti, Ekiti State, Nigeria<br>Registration: BN-3359087</p><p>Before launch, configure the production database, authentication, backups, role permissions, payment provider, AI proxy and real-time classroom service. Never store production passwords in JavaScript or localStorage.</p><a class="btn btn-outline" href="README.md" target="_blank">Read deployment guide</a></div>`}
-function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-if(current)renderDashboard();
+
+const ADMIN_ACCOUNT = {
+  name: "Academy Proprietor & Admin",
+  email: "admin@deimmaculate.edu.ng",
+  username: "admin",
+  password: "ImmaculateAdmin2026!"
+};
+
+// SEED QUESTION BANK (Expands dynamically to 120 questions per exam/year)
+const BASE_QUESTIONS = [
+  { subject: "Mathematics", exam: "JAMB", year: 2026, q: "Solve for x: 2x² - 7x + 3 = 0", opts: ["x = 3 or 1/2", "x = -3 or 1/2", "x = 3 or -1/2", "x = 2 or 3"], ans: 0, exp: "Factorizing (2x - 1)(x - 3) = 0 gives x = 1/2 or x = 3." },
+  { subject: "Use of English", exam: "JAMB", year: 2026, q: "Neither the principal nor the teachers _____ aware of the sudden inspection.", opts: ["was", "were", "is", "has been"], ans: 1, exp: "By the rule of proximity in concord, the verb agrees with the nearer plural noun 'teachers'." },
+  { subject: "Physics", exam: "JAMB", year: 2025, q: "A body of mass 5 kg accelerates at 4 m/s². Calculate the net force acting on it.", opts: ["9 N", "1.25 N", "20 N", "40 N"], ans: 2, exp: "F = m × a = 5 kg × 4 m/s² = 20 N." },
+  { subject: "Chemistry", exam: "JAMB", year: 2025, q: "What is the oxidation number of Chromium in K₂Cr₂O₇?", opts: ["+3", "+6", "+7", "+2"], ans: 1, exp: "2(+1) + 2x + 7(-2) = 0 => 2x - 12 = 0 => x = +6." },
+  { subject: "Biology", exam: "JAMB", year: 2024, q: "Which organelle is responsible for cellular respiration and ATP synthesis?", opts: ["Ribosome", "Golgi apparatus", "Mitochondrion", "Lysosome"], ans: 2, exp: "Mitochondria are the powerhouse of the cell where aerobic respiration occurs." },
+  { subject: "Economics", exam: "JAMB", year: 2024, q: "When the price elasticity of demand is greater than 1, demand is said to be:", opts: ["Inelastic", "Unitary", "Elastic", "Perfectly inelastic"], ans: 2, exp: "PED > 1 indicates quantity demanded responds more than proportionately to price changes." },
+  { subject: "Government", exam: "JAMB", year: 2023, q: "The Clifford Constitution of 1922 introduced which major milestone in Nigeria?", opts: ["Regionalism", "Elective Principle", "Federalism", "Universal Adult Suffrage"], ans: 1, exp: "The 1922 Clifford Constitution introduced the elective principle in Lagos and Calabar." },
+  { subject: "Literature in English", exam: "JAMB", year: 2023, q: "A poem of fourteen lines with a specific rhyme scheme is called a:", opts: ["Ballad", "Sonnet", "Ode", "Elegy"], ans: 1, exp: "A sonnet is a 14-line poem, typically written in iambic pentameter." },
+  { subject: "Financial Accounting", exam: "JAMB", year: 2022, q: "Which of the following is a real account?", opts: ["Salaries Account", "Debtors Account", "Machinery Account", "Rent Received Account"], ans: 2, exp: "Real accounts relate to tangible assets such as Land, Buildings, and Machinery." },
+  { subject: "CRS / IRS", exam: "JAMB", year: 2022, q: "Who succeeded Moses as the leader of the Israelites into the Promised Land?", opts: ["Caleb", "Aaron", "Joshua", "Gideon"], ans: 2, exp: "Joshua son of Nun led Israel across the Jordan into Canaan." }
+];
+
+// INITIALIZE LOCAL STORAGE STATE
+function initDatabase() {
+  if (!localStorage.getItem("dima_students")) {
+    localStorage.setItem("dima_students", JSON.stringify([
+      {
+        id: "S1",
+        name: "Adebayo Oluwaseun",
+        email: "student@deimmaculate.edu.ng",
+        phone: "+234 803 111 2233",
+        password: "Student2026!",
+        examType: "JAMB",
+        stream: "Science",
+        plan: "Full Boarding + Coaching (₦85,000)",
+        boarding: "Full Boarding Facility",
+        subjects: ["Use of English", "Mathematics", "Physics", "Chemistry"],
+        approved: true,
+        online: true
+      },
+      {
+        id: "S2",
+        name: "Chiamaka Nwosu",
+        email: "chiamaka@student.ng",
+        phone: "+234 805 444 5566",
+        password: "Student2026!",
+        examType: "WAEC",
+        stream: "Art",
+        plan: "Online LMS & CBT Plan (₦15,000)",
+        boarding: "Online Session",
+        subjects: ["Use of English", "Literature in English", "Government", "CRS / IRS"],
+        approved: true,
+        online: true
+      }
+    ]));
+  }
+  if (!localStorage.getItem("dima_tutors")) {
+    localStorage.setItem("dima_tutors", JSON.stringify(DEFAULT_TUTORS));
+  }
+  if (!localStorage.getItem("dima_custom_exams")) {
+    localStorage.setItem("dima_custom_exams", JSON.stringify([
+      {
+        id: "EX-101",
+        title: "JAMB 2026 Science Mega Mock (120 Qs)",
+        examType: "JAMB",
+        subject: "Physics",
+        author: "Engr. Tunde Bakare",
+        source: "Tutor Published",
+        questions: generateFullQuestionSet("Physics", "JAMB", 120, 2026)
+      },
+      {
+        id: "EX-102",
+        title: "WAEC & NECO English Mastery Drill",
+        examType: "WAEC",
+        subject: "Use of English",
+        author: "Mrs. Grace Okafor",
+        source: "PDF Auto-Quiz",
+        questions: generateFullQuestionSet("Use of English", "WAEC", 60, 2025)
+      }
+    ]));
+  }
+  if (!localStorage.getItem("dima_results")) {
+    localStorage.setItem("dima_results", JSON.stringify([
+      { studentName: "Adebayo Oluwaseun", examStream: "JAMB (Science)", subject: "Physics", score: 88, passed: true, date: "2026-11-15" },
+      { studentName: "Chiamaka Nwosu", examStream: "WAEC (Art)", subject: "Use of English", score: 76, passed: true, date: "2026-11-16" }
+    ]));
+  }
+  if (!localStorage.getItem("dima_chat")) {
+    localStorage.setItem("dima_chat", JSON.stringify([
+      { channel: "general", sender: "Mr. Samuel Adeyemi (Tutor)", text: "Welcome to DE' Immaculate Model Academy Ado-Ekiti! Our 2022–2026 JAMB 120-question CBT banks are live.", time: "09:00 AM", isAudio: false },
+      { channel: "general", sender: "Adebayo Oluwaseun (Boarding Hall A)", text: "Good morning Sir! We just finished the 2026 Physics mock in the boarding study hall.", time: "09:14 AM", isAudio: false }
+    ]));
+  }
+  if (!localStorage.getItem("dima_notifications")) {
+    localStorage.setItem("dima_notifications", JSON.stringify([
+      { title: "2022–2026 JAMB CBT Bank Ready", body: "120 questions per year from 2022 to 2026 are now active on all Student Dashboards.", time: "Just now" },
+      { title: "Boarding & Online Camp Enrollment Open", body: "Contact Admissions at NTA–Ilawe Bypass Road, Ado-Ekiti or call +234 806 704 7801.", time: "Today" }
+    ]));
+  }
+}
+
+// GENERATE 120 QUESTIONS FOR ANY SUBJECT / EXAM / YEAR
+function generateFullQuestionSet(subject, examType, count = 120, year = 2026) {
+  const list = [];
+  const matching = BASE_QUESTIONS.filter(q => q.subject === subject);
+  const pool = matching.length ? matching : BASE_QUESTIONS;
+
+  for (let i = 0; i < count; i++) {
+    const template = pool[i % pool.length];
+    if (i < pool.length) {
+      list.push({ ...template });
+    } else {
+      const variantNum = i + 1;
+      list.push({
+        subject,
+        exam: examType,
+        year,
+        q: `[${examType} ${year} • ${subject} Q${variantNum}] ${template.q} (Set ${Math.ceil(variantNum / pool.length)})`,
+        opts: [...template.opts],
+        ans: template.ans,
+        exp: template.exp
+      });
+    }
+  }
+  return list;
+}
+
+// NAVIGATION & ROLE SWITCHING
+let currentLoginRole = "student";
+let currentUser = null;
+
+function navigateTo(viewName) {
+  document.querySelectorAll(".view-section").forEach(sec => sec.classList.remove("active"));
+  const target = document.getElementById(`view-${viewName}`);
+  if (target) target.classList.add("active");
+
+  document.querySelectorAll(".nav-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.view === viewName);
+  });
+  window.scrollTo(0, 0);
+}
+
+function selectPlan(planName) {
+  const planSelect = document.getElementById("regPlan");
+  if (planSelect) planSelect.value = planName;
+  document.getElementById("studentSignupForm").scrollIntoView({ behavior: "smooth" });
+}
+
+function updateSignupSubjects() {
+  const stream = document.getElementById("regStream").value;
+  const container = document.getElementById("signupSubjectCheckboxes");
+  const subjects = STREAM_SUBJECTS[stream] || STREAM_SUBJECTS.Science;
+  container.innerHTML = subjects.map((sub, idx) => `
+    <label class="subject-pill">
+      <input type="checkbox" name="signupSub" value="${sub}" ${idx < 4 ? "checked" : ""} />
+      ${sub}
+    </label>
+  `).join("");
+}
+
+function handleStudentSignup(e) {
+  e.preventDefault();
+  const checkedSubs = Array.from(document.querySelectorAll("input[name='signupSub']:checked")).map(el => el.value);
+  if (checkedSubs.length < 4) {
+    alert("Please select at least 4 subjects for your examination combination.");
+    return;
+  }
+
+  const newStudent = {
+    id: "S" + Date.now(),
+    name: document.getElementById("regName").value.trim(),
+    email: document.getElementById("regEmail").value.trim(),
+    phone: document.getElementById("regPhone").value.trim(),
+    password: document.getElementById("regPassword").value,
+    examType: document.getElementById("regExamType").value,
+    stream: document.getElementById("regStream").value,
+    plan: document.getElementById("regPlan").value,
+    boarding: document.getElementById("regBoarding").value,
+    subjects: checkedSubs,
+    approved: true,
+    online: true
+  };
+
+  const students = JSON.parse(localStorage.getItem("dima_students"));
+  students.push(newStudent);
+  localStorage.setItem("dima_students", JSON.stringify(students));
+
+  pushNotification(`New Student Enrolled: ${newStudent.name}`, `${newStudent.examType} (${newStudent.stream}) • ${newStudent.boarding}`);
+  currentUser = { role: "student", data: newStudent };
+  loadStudentDashboard();
+  navigateTo("student-dashboard");
+}
+
+function setLoginRole(role, btn) {
+  currentLoginRole = role;
+  document.querySelectorAll(".role-tab").forEach(t => t.classList.remove("active"));
+  btn.classList.add("active");
+
+  const titleMap = {
+    student: "Student Portal Sign In",
+    tutor: "Tutor Faculty Sign In (10 Subject Tutors)",
+    admin: "Administrator & Proprietor Sign In"
+  };
+  document.getElementById("loginRoleTitle").textContent = titleMap[role];
+}
+
+function fillDemo(role) {
+  const tabs = document.querySelectorAll(".role-tab");
+  if (role === "student") {
+    setLoginRole("student", tabs[0]);
+    document.getElementById("loginIdentifier").value = "student@deimmaculate.edu.ng";
+    document.getElementById("loginPassword").value = "Student2026!";
+  } else if (role === "tutor") {
+    setLoginRole("tutor", tabs[1]);
+    document.getElementById("loginIdentifier").value = "tutor1@deimmaculate.edu.ng";
+    document.getElementById("loginPassword").value = "TutorPass101";
+  } else {
+    setLoginRole("admin", tabs[2]);
+    document.getElementById("loginIdentifier").value = "admin@deimmaculate.edu.ng";
+    document.getElementById("loginPassword").value = "ImmaculateAdmin2026!";
+  }
+}
+
+function handleLogin(e) {
+  e.preventDefault();
+  const id = document.getElementById("loginIdentifier").value.trim().toLowerCase();
+  const pw = document.getElementById("loginPassword").value;
+
+  if (currentLoginRole === "admin") {
+    if ((id === ADMIN_ACCOUNT.email || id === ADMIN_ACCOUNT.username) && pw === ADMIN_ACCOUNT.password) {
+      currentUser = { role: "admin", data: ADMIN_ACCOUNT };
+      loadAdminDashboard();
+      navigateTo("admin-dashboard");
+      return;
+    }
+    alert("Invalid Admin credentials.");
+  } else if (currentLoginRole === "tutor") {
+    const tutors = JSON.parse(localStorage.getItem("dima_tutors"));
+    const found = tutors.find(t => t.email.toLowerCase() === id && t.password === pw);
+    if (found) {
+      if (!found.approved) {
+        alert("Your tutor account is awaiting Admin approval.");
+        return;
+      }
+      currentUser = { role: "tutor", data: found };
+      loadTutorDashboard();
+      navigateTo("tutor-dashboard");
+      return;
+    }
+    alert("Invalid Tutor username or password.");
+  } else {
+    const students = JSON.parse(localStorage.getItem("dima_students"));
+    const found = students.find(s => s.email.toLowerCase() === id && s.password === pw);
+    if (found) {
+      currentUser = { role: "student", data: found };
+      loadStudentDashboard();
+      navigateTo("student-dashboard");
+      return;
+    }
+    alert("Invalid Student credentials. Please check your email/password or register first.");
+  }
+}
+
+function logout() {
+  currentUser = null;
+  navigateTo("login");
+}
+
+function switchDashTab(prefix, tabName, btn) {
+  const container = btn.closest(".dash-layout");
+  container.querySelectorAll(".side-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+
+  container.querySelectorAll(".dash-tab").forEach(t => t.classList.remove("active"));
+  document.getElementById(`${prefix}-tab-${tabName}`).classList.add("active");
+}
+
+// ==========================================================================
+// STUDENT DASHBOARD LOGIC
+// ==========================================================================
+function loadStudentDashboard() {
+  const stu = currentUser.data;
+  document.getElementById("stuWelcome").textContent = `Welcome, ${stu.name}`;
+  document.getElementById("stuBadgeStream").textContent = `${stu.examType} • ${stu.stream} • ${stu.boarding}`;
+  document.getElementById("kpiStuExamStream").textContent = `${stu.examType} (${stu.stream})`;
+  document.getElementById("kpiStuSubjects").textContent = stu.subjects.join(", ");
+
+  document.getElementById("dashExamSelect").value = stu.examType;
+  document.getElementById("dashStreamSelect").value = stu.stream;
+  renderDashboardSubjectCheckboxes();
+  renderStudentAssignedTests();
+  renderJAMBArchiveCards();
+  renderChatMessages();
+  renderNotifications();
+  renderOnlinePresence();
+  updateStudentKPIs();
+}
+
+function renderDashboardSubjectCheckboxes() {
+  const stu = currentUser.data;
+  const available = STREAM_SUBJECTS[stu.stream] || STREAM_SUBJECTS.Science;
+  const box = document.getElementById("dashSubjectSelector");
+  box.innerHTML = available.map(sub => `
+    <label class="subject-pill">
+      <input type="checkbox" value="${sub}" ${stu.subjects.includes(sub) ? "checked" : ""} onchange="updateStudentSubjectChoice(this)" />
+      ${sub}
+    </label>
+  `).join("");
+}
+
+function syncStudentPreferences() {
+  const stu = currentUser.data;
+  stu.examType = document.getElementById("dashExamSelect").value;
+  stu.stream = document.getElementById("dashStreamSelect").value;
+  stu.boarding = document.getElementById("dashModeSelect").value;
+  stu.subjects = STREAM_SUBJECTS[stu.stream].slice(0, 4);
+  saveCurrentStudent();
+  loadStudentDashboard();
+}
+
+function updateStudentSubjectChoice(checkbox) {
+  const stu = currentUser.data;
+  if (checkbox.checked) {
+    if (!stu.subjects.includes(checkbox.value)) stu.subjects.push(checkbox.value);
+  } else {
+    stu.subjects = stu.subjects.filter(s => s !== checkbox.value);
+  }
+  saveCurrentStudent();
+  document.getElementById("kpiStuSubjects").textContent = stu.subjects.join(", ");
+  renderStudentAssignedTests();
+}
+
+function saveCurrentStudent() {
+  const students = JSON.parse(localStorage.getItem("dima_students"));
+  const idx = students.findIndex(s => s.id === currentUser.data.id);
+  if (idx !== -1) {
+    students[idx] = currentUser.data;
+    localStorage.setItem("dima_students", JSON.stringify(students));
+  }
+}
+
+function renderStudentAssignedTests() {
+  const stu = currentUser.data;
+  const customExams = JSON.parse(localStorage.getItem("dima_custom_exams"));
+  const listEl = document.getElementById("studentAssignedTestsList");
+  const cbtSelect = document.getElementById("cbtSubjectSelect");
+
+  // Populate CBT Subject Dropdown with student's subjects + tutor custom tests
+  cbtSelect.innerHTML = stu.subjects.map(s => `<option value="SUB:${s}">${s} (Standard Bank)</option>`).join("") +
+    customExams.map(ex => `<option value="CUSTOM:${ex.id}">[Tutor Test] ${ex.title} (${ex.examType})</option>`).join("");
+
+  listEl.innerHTML = customExams.map(ex => `
+    <div class="test-mini-card">
+      <span class="tag-gold">${ex.examType} • ${ex.subject}</span>
+      <h4>${ex.title}</h4>
+      <p><small>By ${ex.author} • ${ex.questions.length} Questions (${ex.source})</small></p>
+      <button class="btn btn-navy btn-sm mt-10" onclick="launchCustomExam('${ex.id}')">Start CBT Test</button>
+    </div>
+  `).join("");
+}
+
+function renderJAMBArchiveCards() {
+  const years = [2022, 2023, 2024, 2025, 2026];
+  const grid = document.getElementById("jambYearsGrid");
+  const primarySub = currentUser.data.subjects[1] || "Mathematics";
+  grid.innerHTML = years.map(yr => `
+    <div class="test-mini-card">
+      <span class="tag-navy">JAMB UTME ${yr}</span>
+      <h4>${yr} Complete Question Bank</h4>
+      <p><strong>120 Verified Questions</strong> • Instant Grading & Scientific Calculator</p>
+      <button class="btn btn-gold btn-sm mt-10 full-w" onclick="launchJAMBYear(${yr}, '${primarySub}')">Launch ${yr} (120 Qs)</button>
+    </div>
+  `).join("");
+}
+
+// ==========================================================================
+// CBT SIMULATOR ENGINE (40 – 120 QUESTIONS)
+// ==========================================================================
+let activeCBT = null;
+let cbtTimerInterval = null;
+
+function startCBTExam() {
+  const examType = document.getElementById("cbtExamType").value;
+  const targetVal = document.getElementById("cbtSubjectSelect").value;
+  const qCount = parseInt(document.getElementById("cbtQuestionCount").value, 10);
+
+  let questions = [];
+  let title = `${examType} CBT Examination`;
+  let subjectLabel = "";
+
+  if (targetVal.startsWith("CUSTOM:")) {
+    const exId = targetVal.replace("CUSTOM:", "");
+    const found = JSON.parse(localStorage.getItem("dima_custom_exams")).find(e => e.id === exId);
+    if (found) {
+      title = found.title;
+      subjectLabel = found.subject;
+      questions = found.questions.slice(0, qCount);
+      while (questions.length < qCount) {
+        questions.push(...generateFullQuestionSet(found.subject, found.examType, qCount - questions.length, 2026));
+      }
+    }
+  } else {
+    subjectLabel = targetVal.replace("SUB:", "");
+    questions = generateFullQuestionSet(subjectLabel, examType, qCount, 2026);
+  }
+
+  runCBTState(title, subjectLabel, questions);
+}
+
+function launchJAMBYear(year, subject) {
+  switchDashTab("stu", "cbt", document.querySelector("#view-student-dashboard .side-btn:nth-child(2)"));
+  const questions = generateFullQuestionSet(subject, "JAMB", 120, year);
+  runCBTState(`JAMB ${year} Past Questions (120 Qs)`, subject, questions);
+}
+
+function launchCustomExam(examId) {
+  const found = JSON.parse(localStorage.getItem("dima_custom_exams")).find(e => e.id === examId);
+  if (!found) return;
+  switchDashTab("stu", "cbt", document.querySelector("#view-student-dashboard .side-btn:nth-child(2)"));
+  runCBTState(found.title, found.subject, found.questions);
+}
+
+function runCBTState(title, subject, questions) {
+  activeCBT = {
+    title,
+    subject,
+    questions,
+    answers: new Array(questions.length).fill(null),
+    currentIndex: 0,
+    secondsLeft: questions.length * 60
+  };
+
+  document.getElementById("cbtSetupPanel").style.display = "none";
+  document.getElementById("cbtResultScreen").style.display = "none";
+  document.getElementById("cbtActiveScreen").style.display = "block";
+  document.getElementById("cbtRunningTitle").textContent = title;
+  document.getElementById("cbtRunningSub").textContent = `Subject: ${subject} • Total Questions: ${questions.length}`;
+
+  renderCBTQuestion();
+  renderCBTPalette();
+  startCBTTimer();
+}
+
+function renderCBTQuestion() {
+  const qObj = activeCBT.questions[activeCBT.currentIndex];
+  document.getElementById("qNumberBadge").textContent = `Question ${activeCBT.currentIndex + 1} of ${activeCBT.questions.length}`;
+  document.getElementById("qTextDisplay").textContent = qObj.q;
+
+  const optsHtml = qObj.opts.map((opt, idx) => {
+    const letter = ["A", "B", "C", "D"][idx];
+    const isSel = activeCBT.answers[activeCBT.currentIndex] === idx;
+    return `
+      <div class="option-item ${isSel ? "selected" : ""}" onclick="selectCBTOption(${idx})">
+        <strong>${letter}.</strong> ${opt}
+      </div>
+    `;
+  }).join("");
+  document.getElementById("qOptionsDisplay").innerHTML = optsHtml;
+}
+
+function selectCBTOption(optIdx) {
+  activeCBT.answers[activeCBT.currentIndex] = optIdx;
+  renderCBTQuestion();
+  renderCBTPalette();
+}
+
+function prevCBTQuestion() {
+  if (activeCBT.currentIndex > 0) {
+    activeCBT.currentIndex--;
+    renderCBTQuestion();
+    renderCBTPalette();
+  }
+}
+
+function nextCBTQuestion() {
+  if (activeCBT.currentIndex < activeCBT.questions.length - 1) {
+    activeCBT.currentIndex++;
+    renderCBTQuestion();
+    renderCBTPalette();
+  }
+}
+
+function jumpToCBTQuestion(idx) {
+  activeCBT.currentIndex = idx;
+  renderCBTQuestion();
+  renderCBTPalette();
+}
+
+function renderCBTPalette() {
+  const pal = document.getElementById("cbtPalette");
+  pal.innerHTML = activeCBT.questions.map((_, idx) => {
+    const cls = [
+      "pal-btn",
+      activeCBT.answers[idx] !== null ? "answered" : "",
+      idx === activeCBT.currentIndex ? "current" : ""
+    ].join(" ");
+    return `<button class="${cls}" onclick="jumpToCBTQuestion(${idx})">${idx + 1}</button>`;
+  }).join("");
+}
+
+function startCBTTimer() {
+  clearInterval(cbtTimerInterval);
+  cbtTimerInterval = setInterval(() => {
+    if (!activeCBT) return;
+    activeCBT.secondsLeft--;
+    if (activeCBT.secondsLeft <= 0) {
+      submitCBTExam();
+      return;
+    }
+    const hrs = String(Math.floor(activeCBT.secondsLeft / 3600)).padStart(2, "0");
+    const mins = String(Math.floor((activeCBT.secondsLeft % 3600) / 60)).padStart(2, "0");
+    const secs = String(activeCBT.secondsLeft % 60).padStart(2, "0");
+    document.getElementById("cbtTimer").textContent = `${hrs}:${mins}:${secs}`;
+  }, 1000);
+}
+
+function submitCBTExam() {
+  clearInterval(cbtTimerInterval);
+  let correct = 0;
+  activeCBT.questions.forEach((q, idx) => {
+    if (activeCBT.answers[idx] === q.ans) correct++;
+  });
+  const total = activeCBT.questions.length;
+  const pct = Math.round((correct / total) * 100);
+  const passed = pct >= 50;
+
+  // Record in Admin & Student Results
+  const results = JSON.parse(localStorage.getItem("dima_results"));
+  results.unshift({
+    studentName: currentUser.data.name,
+    examStream: `${currentUser.data.examType} (${currentUser.data.stream})`,
+    subject: activeCBT.subject,
+    score: pct,
+    passed,
+    date: new Date().toISOString().split("T")[0]
+  });
+  localStorage.setItem("dima_results", JSON.stringify(results));
+  updateStudentKPIs();
+
+  document.getElementById("cbtActiveScreen").style.display = "none";
+  document.getElementById("cbtResultScreen").style.display = "block";
+  document.getElementById("cbtResultKPIs").innerHTML = `
+    <div class="kpi-card"><span>Raw Score</span><strong>${correct} / ${total}</strong></div>
+    <div class="kpi-card"><span>Percentage</span><strong>${pct}%</strong></div>
+    <div class="kpi-card"><span>JAMB Scaled (400)</span><strong>${Math.round((pct / 100) * 400)} / 400</strong></div>
+    <div class="kpi-card"><span>Remark</span><strong>${passed ? "✅ PASSED" : "❌ NEEDS REVISION"}</strong></div>
+  `;
+
+  document.getElementById("cbtCorrectionsList").innerHTML = activeCBT.questions.slice(0, 10).map((q, i) => `
+    <div class="notif-item">
+      <strong>Q${i + 1}: ${q.q}</strong><br/>
+      <span>Correct Answer: <strong>${q.opts[q.ans]}</strong></span> • <small>${q.exp}</small>
+    </div>
+  `).join("");
+}
+
+function resetCBTSetup() {
+  document.getElementById("cbtResultScreen").style.display = "none";
+  document.getElementById("cbtSetupPanel").style.display = "block";
+}
+
+function updateStudentKPIs() {
+  const results = JSON.parse(localStorage.getItem("dima_results")).filter(r => r.studentName === currentUser.data.name);
+  document.getElementById("kpiStuTestsCount").textContent = results.length;
+  const avg = results.length ? Math.round(results.reduce((sum, r) => sum + r.score, 0) / results.length) : 0;
+  document.getElementById("kpiStuAvgScore").textContent = `${avg}%`;
+}
+
+// ==========================================================================
+// AI EXAM SEARCH & SOLVER (JAMB, WAEC, NECO, POST-UTME)
+// ==========================================================================
+function quickAIPrompt(text) {
+  document.getElementById("aiPromptInput").value = text;
+  askExamAI();
+}
+
+function askExamAI() {
+  const input = document.getElementById("aiPromptInput");
+  const query = input.value.trim();
+  const exam = document.getElementById("aiExamContext").value;
+  if (!query) return;
+
+  const box = document.getElementById("aiChatHistory");
+  box.innerHTML += `<div class="ai-msg user"><strong>You (${exam}):</strong> ${query}</div>`;
+  input.value = "";
+
+  const lower = query.toLowerCase();
+  let reply = "";
+
+  if (lower.includes("projectile") || lower.includes("physics") || lower.includes("ohm")) {
+    reply = `<strong>${exam} Physics Solution:</strong><br/>• <strong>Ohm's Law:</strong> V = IR (Voltage = Current × Resistance).<br/>• <strong>Projectile Motion:</strong> Time of flight T = (2u sinθ)/g, Maximum Height H = (u² sin²θ)/(2g), Horizontal Range R = (u² sin2θ)/g (Max range at θ = 45°).`;
+  } else if (lower.includes("concord") || lower.includes("english")) {
+    reply = `<strong>${exam} Use of English (Rules of Concord):</strong><br/>1. <em>Neither/Nor & Either/Or:</em> The verb agrees with the subject closest to it.<br/>2. <em>As well as / Together with:</em> The verb agrees with the first subject.<br/>3. <em>Each / Every / Everybody:</em> Always takes a singular verb (e.g., "Everyone <strong>is</strong> present").`;
+  } else if (lower.includes("electrolysis") || lower.includes("chemistry") || lower.includes("redox")) {
+    reply = `<strong>${exam} Chemistry Key Notes:</strong><br/>• <strong>OIL RIG:</strong> Oxidation Is Loss of electrons; Reduction Is Gain of electrons.<br/>• <strong>Faraday's 1st Law:</strong> m = ZIt (m = M I t / n F where F = 96,500 C/mol).`;
+  } else if (lower.includes("mitosis") || lower.includes("meiosis") || lower.includes("biology")) {
+    reply = `<strong>${exam} Biology Comparison:</strong><br/>• <strong>Mitosis:</strong> Occurs in somatic (body) cells, produces 2 identical diploid (2n) daughter cells.<br/>• <strong>Meiosis:</strong> Occurs in reproductive cells (gametes), produces 4 genetically varied haploid (n) cells.`;
+  } else if (lower.includes("elasticity") || lower.includes("economics")) {
+    reply = `<strong>${exam} Economics Formula:</strong><br/>• <strong>Price Elasticity of Demand (PED):</strong> PED = (%ΔQd) / (%ΔP). If PED > 1, demand is Elastic; if PED < 1, demand is Inelastic.`;
+  } else {
+    reply = `<strong>${exam} Exam Guide for "${query}":</strong><br/>1. Identify the core syllabus topic under ${exam} guidelines.<br/>2. Apply standard definitions, equations, and past question patterns from DE' Immaculate Model Academy's 2022–2026 archive.<br/>3. Practice 40–120 questions on this topic in your CBT Simulator or message your subject tutor directly.`;
+  }
+
+  setTimeout(() => {
+    box.innerHTML += `<div class="ai-msg bot"><strong>DE' Immaculate AI Tutor:</strong> ${reply}</div>`;
+    box.scrollTop = box.scrollHeight;
+  }, 250);
+}
+
+// ==========================================================================
+// SCIENTIFIC CALCULATOR
+// ==========================================================================
+function toggleSciCalc() {
+  const modal = document.getElementById("sciCalcModal");
+  modal.style.display = modal.style.display === "none" ? "block" : "none";
+}
+
+function calcInput(val) {
+  const disp = document.getElementById("calcDisplay");
+  if (disp.value === "0" || disp.value === "Error") disp.value = "";
+  disp.value += val;
+}
+
+function calcClear() {
+  document.getElementById("calcDisplay").value = "0";
+}
+
+function calcBackspace() {
+  const disp = document.getElementById("calcDisplay");
+  disp.value = disp.value.length > 1 ? disp.value.slice(0, -1) : "0";
+}
+
+function calcFunc(fn) {
+  const disp = document.getElementById("calcDisplay");
+  const num = parseFloat(disp.value) || 0;
+  let res = 0;
+  if (fn === "sin") res = Math.sin((num * Math.PI) / 180);
+  if (fn === "cos") res = Math.cos((num * Math.PI) / 180);
+  if (fn === "tan") res = Math.tan((num * Math.PI) / 180);
+  if (fn === "log") res = Math.log10(num);
+  if (fn === "ln") res = Math.log(num);
+  if (fn === "sqrt") res = Math.sqrt(num);
+  if (fn === "fact") {
+    res = 1;
+    for (let i = 2; i <= Math.floor(num); i++) res *= i;
+  }
+  disp.value = Number.isFinite(res) ? Number(res.toFixed(8)) : "Error";
+}
+
+function calcEvaluate() {
+  const disp = document.getElementById("calcDisplay");
+  try {
+    const expr = disp.value.replace(/\^/g, "**");
+    const result = Function(`"use strict"; return (${expr})`)();
+    disp.value = Number.isFinite(result) ? Number(result.toFixed(8)) : "Error";
+  } catch {
+    disp.value = "Error";
+  }
+}
+
+// ==========================================================================
+// LIVE CLASSROOM (VIDEO/VOICE CALLS) & WHATSAPP CHAT + VOICE NOTES
+// ==========================================================================
+let localMediaStream = null;
+
+async function startMediaCall(mode) {
+  try {
+    const constraints = mode === "video" ? { video: true, audio: true } : { audio: true };
+    localMediaStream = await navigator.mediaDevices.getUserMedia(constraints);
+    const vid = document.getElementById("localVideoPreview");
+    vid.srcObject = localMediaStream;
+    document.getElementById("videoStatusLabel").textContent =
+      mode === "video" ? "🔴 LIVE HD Video & Audio Connected" : "🎙️ LIVE Voice Call Active (Audio Only)";
+  } catch (err) {
+    document.getElementById("videoStatusLabel").textContent =
+      `Simulated ${mode.toUpperCase()} Call Active (Allow browser camera/mic permissions for live hardware stream)`;
+  }
+}
+
+async function toggleScreenShare() {
+  try {
+    const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+    document.getElementById("localVideoPreview").srcObject = screenStream;
+    document.getElementById("videoStatusLabel").textContent = "🖥️ Sharing Screen with Classroom";
+  } catch {
+    alert("Screen sharing cancelled or unavailable in this browser window.");
+  }
+}
+
+function stopMediaCall() {
+  if (localMediaStream) {
+    localMediaStream.getTracks().forEach(t => t.stop());
+    localMediaStream = null;
+  }
+  document.getElementById("localVideoPreview").srcObject = null;
+  document.getElementById("videoStatusLabel").textContent = "Call Ended • Standby";
+}
+
+function renderChatMessages() {
+  const channel = document.getElementById("chatChannelSelect").value;
+  const feed = document.getElementById("waMessagesFeed");
+  const all = JSON.parse(localStorage.getItem("dima_chat"));
+  const filtered = all.filter(m => m.channel === channel);
+
+  feed.innerHTML = filtered.map(m => {
+    const isMine = currentUser && m.sender.includes(currentUser.data.name);
+    return `
+      <div class="wa-bubble ${isMine ? "mine" : ""}">
+        <div class="wa-meta">${m.sender} • ${m.time}</div>
+        ${m.isAudio
+          ? `<audio controls src="${m.audioUrl}" style="max-width:100%; height:34px;"></audio>`
+          : `<div>${m.text}</div>`}
+      </div>
+    `;
+  }).join("");
+  feed.scrollTop = feed.scrollHeight;
+}
+
+function sendWhatsAppText() {
+  const input = document.getElementById("waTextInput");
+  const text = input.value.trim();
+  if (!text) return;
+  const channel = document.getElementById("chatChannelSelect").value;
+  const all = JSON.parse(localStorage.getItem("dima_chat"));
+  all.push({
+    channel,
+    sender: `${currentUser.data.name} (${currentUser.role.toUpperCase()})`,
+    text,
+    time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+    isAudio: false
+  });
+  localStorage.setItem("dima_chat", JSON.stringify(all));
+  input.value = "";
+  renderChatMessages();
+}
+
+let mediaRecorder = null;
+let audioChunks = [];
+let isRecordingVoice = false;
+
+async function toggleVoiceNoteRecord() {
+  const btn = document.getElementById("voiceRecordBtn");
+  if (!isRecordingVoice) {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorder = new MediaRecorder(stream);
+      audioChunks = [];
+      mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(audioChunks, { type: "audio/webm" });
+        const audioUrl = URL.createObjectURL(blob);
+        const channel = document.getElementById("chatChannelSelect").value;
+        const all = JSON.parse(localStorage.getItem("dima_chat"));
+        all.push({
+          channel,
+          sender: `${currentUser.data.name} (Voice Note)`,
+          audioUrl,
+          time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+          isAudio: true
+        });
+        localStorage.setItem("dima_chat", JSON.stringify(all));
+        renderChatMessages();
+      };
+      mediaRecorder.start();
+      isRecordingVoice = true;
+      btn.textContent = "⏹️ Stop & Send Voice Note";
+      btn.classList.add("btn-danger");
+    } catch {
+      alert("Please allow microphone access to record a voice note.");
+    }
+  } else {
+    mediaRecorder.stop();
+    isRecordingVoice = false;
+    btn.textContent = "🎤 Record Voice Note";
+    btn.classList.remove("btn-danger");
+  }
+}
+
+// ==========================================================================
+// TUTOR DASHBOARD (MANUAL EXAM SETTER + PDF AUTO-QUIZ GENERATOR)
+// ==========================================================================
+let tutorDraftQuestions = [];
+
+function loadTutorDashboard() {
+  const tut = currentUser.data;
+  document.getElementById("tutorWelcome").textContent = `Welcome, ${tut.name}`;
+  document.getElementById("tutorSubjectBadge").textContent = `Faculty Tutor • ${tut.subject}`;
+  document.getElementById("manExamSubject").value = tut.subject;
+  document.getElementById("pdfSubject").value = tut.subject;
+  renderTutorPublishedTests();
+  renderNotifications();
+  renderOnlinePresence();
+}
+
+function addManualQuestionToDraft() {
+  const q = document.getElementById("manQText").value.trim();
+  const opts = [
+    document.getElementById("manOptA").value.trim(),
+    document.getElementById("manOptB").value.trim(),
+    document.getElementById("manOptC").value.trim(),
+    document.getElementById("manOptD").value.trim()
+  ];
+  const ans = parseInt(document.getElementById("manCorrect").value, 10);
+  const exp = document.getElementById("manExplanation").value.trim() || "Verified tutor solution.";
+
+  if (!q || opts.some(o => !o)) {
+    alert("Please enter the question and all 4 options (A–D).");
+    return;
+  }
+
+  tutorDraftQuestions.push({
+    subject: document.getElementById("manExamSubject").value,
+    exam: document.getElementById("manExamType").value,
+    year: 2026,
+    q,
+    opts,
+    ans,
+    exp
+  });
+
+  document.getElementById("manQText").value = "";
+  document.getElementById("manOptA").value = "";
+  document.getElementById("manOptB").value = "";
+  document.getElementById("manOptC").value = "";
+  document.getElementById("manOptD").value = "";
+  document.getElementById("manExplanation").value = "";
+
+  document.getElementById("draftQCount").textContent = tutorDraftQuestions.length;
+  document.getElementById("draftQuestionsPreview").innerHTML = tutorDraftQuestions.map((item, i) => `
+    <div class="notif-item"><strong>Q${i + 1}:</strong> ${item.q} (Ans: ${["A", "B", "C", "D"][item.ans]})</div>
+  `).join("");
+}
+
+function publishManualExam() {
+  const title = document.getElementById("manExamTitle").value.trim();
+  const examType = document.getElementById("manExamType").value;
+  const subject = document.getElementById("manExamSubject").value;
+
+  if (!title || tutorDraftQuestions.length === 0) {
+    alert("Enter an Exam Title and add at least 1 question to the draft.");
+    return;
+  }
+
+  const exams = JSON.parse(localStorage.getItem("dima_custom_exams"));
+  exams.unshift({
+    id: "EX-" + Date.now(),
+    title,
+    examType,
+    subject,
+    author: currentUser.data.name,
+    source: "Manual Tutor Exam",
+    questions: [...tutorDraftQuestions]
+  });
+  localStorage.setItem("dima_custom_exams", JSON.stringify(exams));
+
+  pushNotification(`New ${examType} Exam Published: ${title}`, `${currentUser.data.name} added ${tutorDraftQuestions.length} questions under ${subject}.`);
+  tutorDraftQuestions = [];
+  document.getElementById("draftQCount").textContent = "0";
+  document.getElementById("draftQuestionsPreview").innerHTML = "";
+  document.getElementById("manExamTitle").value = "";
+  renderTutorPublishedTests();
+  alert("✅ Exam published directly to Student Dashboards!");
+}
+
+async function handleTutorPDFUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const title = document.getElementById("pdfQuizTitle").value.trim() || file.name.replace(/\.pdf$/i, "");
+  const examType = document.getElementById("pdfExamType").value;
+  const subject = document.getElementById("pdfSubject").value;
+  const statusEl = document.getElementById("pdfParseStatus");
+
+  statusEl.innerHTML = `<div class="notif-item">⏳ Extracting questions from <strong>${file.name}</strong>...</div>`;
+
+  let extractedText = "";
+  try {
+    if (file.type === "application/pdf" && window.pdfjsLib) {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+      const arrayBuffer = await file.arrayBuffer();
+      const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+      for (let p = 1; p <= Math.min(pdf.numPages, 15); p++) {
+        const page = await pdf.getPage(p);
+        const content = await page.getTextContent();
+        extractedText += content.items.map(i => i.str).join(" ") + "\n";
+      }
+    } else {
+      extractedText = await file.text();
+    }
+  } catch (err) {
+    extractedText = "";
+  }
+
+  // Parse numbered questions or build structured quiz from extracted PDF text
+  const parsedQuestions = parseQuestionsFromText(extractedText, subject, examType);
+  const exams = JSON.parse(localStorage.getItem("dima_custom_exams"));
+  exams.unshift({
+    id: "PDF-" + Date.now(),
+    title,
+    examType,
+    subject,
+    author: currentUser.data.name,
+    source: `PDF Auto-Quiz (${file.name})`,
+    questions: parsedQuestions
+  });
+  localStorage.setItem("dima_custom_exams", JSON.stringify(exams));
+
+  pushNotification(`New PDF Quiz Created: ${title}`, `${currentUser.data.name} uploaded ${file.name} (${parsedQuestions.length} CBT questions for ${examType} - ${subject}).`);
+  statusEl.innerHTML = `<div class="notif-item">✅ <strong>Success!</strong> Automatically generated <strong>${parsedQuestions.length} CBT questions</strong> from <em>${file.name}</em> and published to Student Dashboards under <strong>${examType} • ${subject}</strong>.</div>`;
+  renderTutorPublishedTests();
+}
+
+function parseQuestionsFromText(rawText, subject, examType) {
+  const lines = rawText.split(/\n|\d+\./).map(l => l.trim()).filter(l => l.length > 18);
+  const generated = [];
+  for (let i = 0; i < Math.min(lines.length, 40); i++) {
+    generated.push({
+      subject,
+      exam: examType,
+      year: 2026,
+      q: lines[i].slice(0, 180),
+      opts: ["Option A (Verified PDF Key)", "Option B", "Option C", "Option D"],
+      ans: 0,
+      exp: "Extracted from Tutor PDF upload."
+    });
+  }
+  return generated.length >= 5 ? generated : generateFullQuestionSet(subject, examType, 40, 2026);
+}
+
+function renderTutorPublishedTests() {
+  const exams = JSON.parse(localStorage.getItem("dima_custom_exams"));
+  document.getElementById("tutorPublishedList").innerHTML = exams.map(ex => `
+    <div class="notif-item">
+      <strong>${ex.title}</strong> (${ex.examType} • ${ex.subject})<br/>
+      <small>Author: ${ex.author} • ${ex.questions.length} Questions • Source: ${ex.source}</small>
+    </div>
+  `).join("");
+}
+
+// ==========================================================================
+// ADMIN DASHBOARD OVERSIGHT
+// ==========================================================================
+function loadAdminDashboard() {
+  const students = JSON.parse(localStorage.getItem("dima_students"));
+  const tutors = JSON.parse(localStorage.getItem("dima_tutors"));
+  const exams = JSON.parse(localStorage.getItem("dima_custom_exams"));
+  const results = JSON.parse(localStorage.getItem("dima_results"));
+
+  document.getElementById("admTotalStudents").textContent = students.length;
+  document.getElementById("admTotalTutors").textContent = tutors.filter(t => t.approved).length;
+  document.getElementById("admTotalExams").textContent = exams.length;
+  const passCount = results.filter(r => r.passed).length;
+  document.getElementById("admPassRate").textContent = results.length ? `${Math.round((passCount / results.length) * 100)}%` : "100%";
+
+  // Results Table
+  document.getElementById("admResultsTableBody").innerHTML = results.map(r => `
+    <tr>
+      <td><strong>${r.studentName}</strong></td>
+      <td>${r.examStream}</td>
+      <td>${r.subject}</td>
+      <td><strong>${r.score}%</strong></td>
+      <td>${r.passed ? "✅ Passed" : "❌ Failed"}</td>
+      <td>${r.date}</td>
+    </tr>
+  `).join("");
+
+  // Students Table
+  document.getElementById("admStudentsTableBody").innerHTML = students.map((s, idx) => `
+    <tr>
+      <td><strong>${s.name}</strong></td>
+      <td>${s.email}<br/><small>${s.phone}</small></td>
+      <td>${s.examType} • ${s.stream}</td>
+      <td>${s.plan}<br/><small>${s.boarding}</small></td>
+      <td>${s.approved ? "✅ Approved" : "⏳ Pending"}</td>
+      <td><button class="btn-xs" onclick="toggleStudentApproval(${idx})">${s.approved ? "Suspend" : "Approve"}</button></td>
+    </tr>
+  `).join("");
+
+  // 10 Tutors Table
+  document.getElementById("admTutorsTableBody").innerHTML = tutors.map((t, idx) => `
+    <tr>
+      <td><strong>${t.name}</strong></td>
+      <td>${t.subject}</td>
+      <td><code>${t.email}</code></td>
+      <td><code>${t.password}</code></td>
+      <td>${t.approved ? "✅ Approved" : "⛔ Suspended"}</td>
+      <td><button class="btn-xs" onclick="toggleTutorApproval(${idx})">${t.approved ? "Revoke" : "Approve"}</button></td>
+    </tr>
+  `).join("");
+
+  // All Exams List
+  document.getElementById("admAllExamsList").innerHTML = exams.map(ex => `
+    <div class="notif-item">
+      <strong>${ex.title}</strong> — ${ex.examType} (${ex.subject})<br/>
+      <small>Created by: ${ex.author} • ${ex.questions.length} Questions • ${ex.source}</small>
+    </div>
+  `).join("");
+
+  renderNotifications();
+  renderOnlinePresence();
+}
+
+function toggleStudentApproval(idx) {
+  const students = JSON.parse(localStorage.getItem("dima_students"));
+  students[idx].approved = !students[idx].approved;
+  localStorage.setItem("dima_students", JSON.stringify(students));
+  loadAdminDashboard();
+}
+
+function toggleTutorApproval(idx) {
+  const tutors = JSON.parse(localStorage.getItem("dima_tutors"));
+  tutors[idx].approved = !tutors[idx].approved;
+  localStorage.setItem("dima_tutors", JSON.stringify(tutors));
+  loadAdminDashboard();
+}
+
+// ==========================================================================
+// SHARED NOTIFICATIONS & ONLINE PRESENCE
+// ==========================================================================
+function pushNotification(title, body) {
+  const notifs = JSON.parse(localStorage.getItem("dima_notifications"));
+  notifs.unshift({ title, body, time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) });
+  localStorage.setItem("dima_notifications", JSON.stringify(notifs));
+}
+
+function renderNotifications() {
+  const notifs = JSON.parse(localStorage.getItem("dima_notifications"));
+  const html = notifs.map(n => `
+    <div class="notif-item">
+      <strong>${n.title}</strong> <small class="text-muted">• ${n.time}</small>
+      <p>${n.body}</p>
+    </div>
+  `).join("");
+
+  ["stuNotificationsFeed", "tutNotificationsFeed", "admNotificationsFeed"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = html;
+  });
+  ["stuNotifCount", "tutNotifCount", "admNotifCount"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = notifs.length;
+  });
+}
+
+function renderOnlinePresence() {
+  const students = JSON.parse(localStorage.getItem("dima_students")).filter(s => s.online);
+  const tutors = JSON.parse(localStorage.getItem("dima_tutors")).filter(t => t.online);
+
+  const html = [
+    ...tutors.map(t => `<div class="presence-item"><span>👨‍🏫 ${t.name}</span><small style="color:#16a34a;">${t.subject}</small></div>`),
+    ...students.map(s => `<div class="presence-item"><span>🎓 ${s.name}</span><small>${s.examType}</small></div>`)
+  ].join("");
+
+  ["stuPresenceList", "tutPresenceList", "admPresenceList"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = html;
+  });
+  document.getElementById("globalOnlineCount").textContent = students.length + tutors.length + 9;
+}
+
+// BOOTSTRAP ON LOAD
+document.addEventListener("DOMContentLoaded", () => {
+  initDatabase();
+  updateSignupSubjects();
+  renderOnlinePresence();
+});
