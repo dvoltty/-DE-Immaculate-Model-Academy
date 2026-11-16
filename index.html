@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DE' Immaculate Model Academy | Educational Institution & Exam Coaching Centre</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+  <!-- PDF.js for automatic PDF Question Extraction -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body>
+  <!-- TOP UTILITY BAR -->
+  <div class="top-utility-bar">
+    <div class="container utility-flex">
+      <span>📍 NTA–Ilawe Bypass Road, Opp. Federal Polytechnic Ado-Ekiti Satellite Campus, Ekiti State | RC/BN: <strong>BN-3359087</strong></span>
+      <div class="utility-right">
+        <a href="tel:+2348067047801" class="phone-link">📞 +234 806 704 7801</a>
+        <span class="live-pill"><span class="dot"></span> <span id="globalOnlineCount">18</span> Online Now</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN NAVIGATION HEADER -->
+  <header class="main-header">
+    <div class="container nav-flex">
+      <a href="#home" class="brand-logo" onclick="navigateTo('home')">
+        <img src="assets/header-logo.png" alt="DE' Immaculate Model Academy Logo" onerror="this.style.display='none'; document.getElementById('fallbackHeaderText').style.display='flex';" />
+        <div id="fallbackHeaderText" class="fallback-brand" style="display:none;">
+          <span class="shield-icon">🛡️</span>
+          <div>
+            <strong>DE' IMMACULATE</strong>
+            <small>MODEL ACADEMY</small>
+          </div>
+        </div>
+      </a>
+
+      <nav class="nav-links" id="mainNav">
+        <button class="nav-btn active" data-view="home" onclick="navigateTo('home')">Home</button>
+        <button class="nav-btn" data-view="programs" onclick="navigateTo('programs')">Programs & Boarding</button>
+        <button class="nav-btn" data-view="pricing" onclick="navigateTo('pricing')">Tuition & Signup</button>
+        <button class="nav-btn" data-view="about" onclick="navigateTo('about')">About & Location</button>
+        <button class="nav-btn portal-btn" data-view="login" onclick="navigateTo('login')" id="navPortalBtn">Portal Login</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ==================== VIEW 1: HOMEPAGE ==================== -->
+  <main id="view-home" class="view-section active">
+    <section class="hero-section">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <div class="badge-gold">CAC Registered: BN-3359087 • Active Since April 2021</div>
+          <h1>Premier Exam Coaching & Digital Learning Academy in Ado-Ekiti</h1>
+          <p class="hero-sub">
+            De Immaculate Model Academy is an educational institution and exam coaching center located in Ado-Ekiti, Ekiti State, Nigeria. Situated along the <strong>NTA–Ilawe Bypass Road, directly opposite the Federal Polytechnic Ado-Ekiti Satellite Campus</strong>, we prepare candidates for excellence in <strong>JAMB UTME, WAEC, NECO, and Post-UTME</strong>.
+          </p>
+          <div class="hero-actions">
+            <button class="btn btn-gold" onclick="navigateTo('pricing')">Enroll & Create Student Account</button>
+            <button class="btn btn-outline-light" onclick="navigateTo('login')">Student / Tutor / Admin Login</button>
+          </div>
+          <div class="hero-stats">
+            <div class="stat-box">
+              <strong>600+</strong>
+              <span>JAMB 2022–2026 Questions (120/yr)</span>
+            </div>
+            <div class="stat-box">
+              <strong>40–120</strong>
+              <span>Configurable CBT Simulator</span>
+            </div>
+            <div class="stat-box">
+              <strong>24/7</strong>
+              <span>Live Classroom & AI Study Tutor</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-emblem-card">
+          <div class="emblem-frame">
+            <img src="assets/home-emblem.jpg" alt="DE' Immaculate Model Academy Crest" />
+          </div>
+          <div class="emblem-caption">
+            <h3>DE' IMMACULATE MODEL ACADEMY</h3>
+            <p>Excellence • Discipline • Academic Distinction</p>
+            <div class="contact-chip">📞 Admission & Enquiry: <strong>+234 806 704 7801</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CORE INSTITUTIONAL PILLARS -->
+    <section class="section-pad bg-light">
+      <div class="container">
+        <div class="section-header">
+          <h2>Comprehensive Exam Preparation & Campus Facilities</h2>
+          <p>Structured academic tracks for Science, Art, and Commercial candidates across Nigeria.</p>
+        </div>
+
+        <div class="cards-grid-4">
+          <div class="feature-card">
+            <div class="icon-circle">🎯</div>
+            <h3>JAMB Past Questions (2022–2026)</h3>
+            <p>120 verified questions per year across 2022, 2023, 2024, 2025, and 2026 UTME sessions with instant solutions and subject combinations.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon-circle">💻</div>
+            <h3>Online Live Sessions</h3>
+            <p>Interactive virtual classrooms with HD video calls, voice calls, Zoom-style screen sharing, and WhatsApp-style chat & voice notes.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon-circle">🏠</div>
+            <h3>Full Boarding Facilities</h3>
+            <p>Secure, disciplined hostel accommodation for JAMB, WAEC, NECO, and Post-UTME candidates along NTA–Ilawe Bypass Road, Ado-Ekiti.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon-circle">🤖</div>
+            <h3>AI Exam Tutor & Scientific Calc</h3>
+            <p>Built-in AI search & instant answers for JAMB, WAEC, and NECO syllabi alongside an advanced scientific calculator inside every CBT exam.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXAM TRACKS & STREAM SHOWCASE -->
+    <section class="section-pad">
+      <div class="container">
+        <div class="section-header">
+          <h2>Academic Streams & Examination Tracks</h2>
+          <p>Tailored subject combinations for every candidate category.</p>
+        </div>
+        <div class="cards-grid-3">
+          <div class="stream-card">
+            <span class="tag-navy">JAMB UTME • 2022–2026</span>
+            <h3>Science, Art & Commercial</h3>
+            <ul>
+              <li><strong>Science:</strong> Use of English, Mathematics, Physics, Chemistry, Biology</li>
+              <li><strong>Art:</strong> Use of English, Literature-in-English, Government, CRS/IRS</li>
+              <li><strong>Commercial:</strong> Use of English, Economics, Financial Accounting, Commerce</li>
+              <li><strong>Mode:</strong> Physical Coaching, Online Sessions & Boarding</li>
+            </ul>
+            <button class="btn btn-navy full-w" onclick="navigateTo('pricing')">Select JAMB Track</button>
+          </div>
+
+          <div class="stream-card">
+            <span class="tag-gold">WAEC & NECO SSCE</span>
+            <h3>O'Level Intensive Mastery</h3>
+            <ul>
+              <li>Complete syllabus coverage with practicals & theory drills</li>
+              <li>40 to 120 question timed CBT objective practice</li>
+              <li>Dedicated Boarding & Day coaching supervision</li>
+              <li>Direct tutor feedback & PDF past question drills</li>
+            </ul>
+            <button class="btn btn-navy full-w" onclick="navigateTo('pricing')">Select WAEC / NECO Track</button>
+          </div>
+
+          <div class="stream-card">
+            <span class="tag-navy">POST-UTME SCREENING</span>
+            <h3>University & Polytechnic Prep</h3>
+            <ul>
+              <li>Targeted screening drills for Federal Poly Ado-Ekiti, EKSU, FUTA, UNILAG, OAU, UI</li>
+              <li>Speed & accuracy CBT simulations (40–120 questions)</li>
+              <li>Boarding camp & intensive online revision classes</li>
+              <li>One-on-one mentorship with 10+ specialist tutors</li>
+            </ul>
+            <button class="btn btn-navy full-w" onclick="navigateTo('pricing')">Select Post-UTME Track</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT & LOCATION BANNER -->
+    <section class="section-pad bg-navy text-white">
+      <div class="container about-split">
+        <div>
+          <span class="badge-gold">Official Institutional Profile</span>
+          <h2>About De Immaculate Model Academy</h2>
+          <p>
+            De Immaculate Model Academy is an educational institution and exam coaching center located in Ado-Ekiti, Ekiti State, Nigeria.
+          </p>
+          <ul class="info-checklist">
+            <li><strong>Location Context:</strong> Situated along the NTA–Ilawe Bypass Road, directly opposite the Federal Polytechnic Ado-Ekiti Satellite Campus.</li>
+            <li><strong>Academic Focus:</strong> In addition to general educational services, the academy operates a well-regarded coaching center specializing in preparation for major exams like JAMB, WAEC, NECO, and Post-UTME.</li>
+            <li><strong>Business Registration:</strong> Registered in Nigeria as a sole proprietorship under registration number <strong>BN-3359087</strong>, with active status since April 2021.</li>
+            <li><strong>Direct Contact:</strong> <a href="tel:+2348067047801" class="gold-link">+234 806 704 7801</a></li>
+          </ul>
+        </div>
+        <div class="location-card">
+          <h3>Campus & Boarding Desk</h3>
+          <p><strong>Address:</strong> NTA–Ilawe Bypass Road, Opp. Federal Polytechnic Ado-Ekiti Satellite Campus, Ado-Ekiti, Ekiti State, Nigeria.</p>
+          <p><strong>CAC Reg No:</strong> BN-3359087 (Active since April 2021)</p>
+          <p><strong>Telephone / WhatsApp:</strong> +234 806 704 7801</p>
+          <p><strong>Sessions:</strong> Day Coaching • Online Live Sessions • Full Boarding</p>
+          <button class="btn btn-gold full-w" onclick="navigateTo('pricing')">Register Now</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== VIEW 2: PROGRAMS & BOARDING ==================== -->
+  <section id="view-programs" class="view-section section-pad">
+    <div class="container">
+      <div class="section-header">
+        <h2>Programs, Online Sessions & Boarding Facilities</h2>
+        <p>Available for JAMB (2022–2026 Question Bank), WAEC, NECO, and Post-UTME candidates.</p>
+      </div>
+      <div class="cards-grid-2">
+        <div class="detail-box">
+          <h3>🏫 Full Boarding Facilities (JAMB, WAEC, NECO & Post-UTME)</h3>
+          <p>Our serene boarding house along NTA–Ilawe Bypass Road (opposite Federal Polytechnic Ado-Ekiti Satellite Campus) provides an uninterrupted reading environment:</p>
+          <ul>
+            <li>24/7 supervised night prep & weekend CBT mock marathons</li>
+            <li>Dedicated hostel wardens, steady power supply & nutritious meals</li>
+            <li>Immediate access to our 10+ resident & visiting subject tutors</li>
+            <li>Available for JAMB, WAEC, NECO, and Post-UTME intensive camps</li>
+          </ul>
+        </div>
+        <div class="detail-box">
+          <h3>🌐 Online Live Sessions & Digital LMS</h3>
+          <p>Study from anywhere in Nigeria with our synchronized online learning ecosystem:</p>
+          <ul>
+            <li>Live HD Video & Voice Classroom sessions with interactive whiteboard</li>
+            <li>WhatsApp-style Student-Tutor Messaging with instant Voice Notes</li>
+            <li>120 Questions per year for JAMB 2022, 2023, 2024, 2025 & 2026</li>
+            <li>Auto-graded CBT tests uploaded directly by your subject tutors</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== VIEW 3: PRICING & STUDENT SIGNUP ==================== -->
+  <section id="view-pricing" class="view-section section-pad bg-light">
+    <div class="container">
+      <div class="section-header">
+        <h2>Tuition Plans & Student Registration</h2>
+        <p>Choose your learning plan and register your Examination Type & Academic Stream below. Need help? Call <strong>+234 806 704 7801</strong>.</p>
+      </div>
+
+      <!-- PRICING TIERS -->
+      <div class="cards-grid-3 mb-40">
+        <div class="pricing-card">
+          <div class="plan-header">
+            <h3>Online LMS & CBT Plan</h3>
+            <div class="price">₦15,000 <span>/ term</span></div>
+          </div>
+          <ul>
+            <li>✅ Full access to JAMB 2022–2026 (120 Qs/year)</li>
+            <li>✅ 40–120 Question Customizable CBT Engine</li>
+            <li>✅ Live Online Video/Voice Classes & Chat</li>
+            <li>✅ AI Exam Search Assistant & Scientific Calculator</li>
+            <li>✅ Access to Tutor PDF Quizzes & Mock Exams</li>
+          </ul>
+          <button class="btn btn-outline-navy full-w" onclick="selectPlan('Online LMS & CBT Plan (₦15,000)')">Choose Online Plan</button>
+        </div>
+
+        <div class="pricing-card popular">
+          <div class="ribbon">MOST POPULAR</div>
+          <div class="plan-header">
+            <h3>Physical Coaching + LMS</h3>
+            <div class="price">₦35,000 <span>/ term</span></div>
+          </div>
+          <ul>
+            <li>✅ On-campus classes at NTA–Ilawe Bypass Road, Ado-Ekiti</li>
+            <li>✅ Full Digital LMS, Live Classes & Voice Notes</li>
+            <li>✅ JAMB (2022–2026), WAEC, NECO & Post-UTME drills</li>
+            <li>✅ Weekly proctored CBT center simulations</li>
+            <li>✅ AI Study Assistant & Personal Progress Tracking</li>
+          </ul>
+          <button class="btn btn-gold full-w" onclick="selectPlan('Physical Coaching + LMS (₦35,000)')">Choose Coaching + LMS</button>
+        </div>
+
+        <div class="pricing-card">
+          <div class="plan-header">
+            <h3>Full Boarding + Coaching</h3>
+            <div class="price">₦85,000 <span>/ term</span></div>
+          </div>
+          <ul>
+            <li>✅ Secure Boarding Accommodation in Ado-Ekiti</li>
+            <li>✅ JAMB, WAEC, NECO & Post-UTME Intensive Camp</li>
+            <li>✅ Supervised Night Study & Daily Tutor Clinics</li>
+            <li>✅ Full Digital LMS, CBT Portal & AI Tutor Access</li>
+            <li>✅ All meals, utilities & weekend mock exams included</li>
+          </ul>
+          <button class="btn btn-outline-navy full-w" onclick="selectPlan('Full Boarding + Coaching (₦85,000)')">Choose Boarding Plan</button>
+        </div>
+      </div>
+
+      <!-- SIGNUP FORM -->
+      <div class="auth-card wide-form">
+        <h3>Student Enrollment & Account Registration</h3>
+        <form id="studentSignupForm" onsubmit="handleStudentSignup(event)">
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label>Full Name *</label>
+              <input type="text" id="regName" required placeholder="e.g., Adebayo Oluwaseun" />
+            </div>
+            <div class="form-group">
+              <label>Email Address (Login Username) *</label>
+              <input type="email" id="regEmail" required placeholder="student@example.com" />
+            </div>
+            <div class="form-group">
+              <label>Phone / WhatsApp Number *</label>
+              <input type="tel" id="regPhone" required placeholder="+234 800 000 0000" />
+            </div>
+            <div class="form-group">
+              <label>Create Password *</label>
+              <input type="password" id="regPassword" required placeholder="Minimum 6 characters" />
+            </div>
+            <div class="form-group">
+              <label>Examination Type *</label>
+              <select id="regExamType" required onchange="updateSignupSubjects()">
+                <option value="JAMB">JAMB UTME (2022–2026 Question Bank)</option>
+                <option value="WAEC">WAEC SSCE</option>
+                <option value="NECO">NECO SSCE</option>
+                <option value="POST-UTME">Post-UTME Screening</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Student Department / Stream *</label>
+              <select id="regStream" required onchange="updateSignupSubjects()">
+                <option value="Science">Science (Medicine, Engineering, Sciences)</option>
+                <option value="Art">Art (Law, Mass Comm, Humanities)</option>
+                <option value="Commercial">Commercial (Accounting, Economics, Business)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Study Mode & Selected Plan *</label>
+              <select id="regPlan" required>
+                <option value="Physical Coaching + LMS (₦35,000)">Physical Coaching + LMS (₦35,000)</option>
+                <option value="Online LMS & CBT Plan (₦15,000)">Online LMS & CBT Plan (₦15,000)</option>
+                <option value="Full Boarding + Coaching (₦85,000)">Full Boarding + Coaching (₦85,000)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Accommodation Preference *</label>
+              <select id="regBoarding" required>
+                <option value="Online Session">Online Live Session Only</option>
+                <option value="Day Student (Ado-Ekiti Campus)">Day Student (Ado-Ekiti Campus)</option>
+                <option value="Full Boarding Facility">Full Boarding Facility (Hostel)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Select Your 4 Core Exam Subjects (Use of English is compulsory):</label>
+            <div id="signupSubjectCheckboxes" class="subject-pills"></div>
+          </div>
+
+          <button type="submit" class="btn btn-gold full-w">Complete Registration & Enter Student Dashboard</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== VIEW 4: ABOUT & LOCATION ==================== -->
+  <section id="view-about" class="view-section section-pad">
+    <div class="container">
+      <div class="section-header">
+        <h2>About De Immaculate Model Academy</h2>
+        <p>Registered Educational Institution & Examination Coaching Centre • CAC BN-3359087</p>
+      </div>
+      <div class="detail-box">
+        <p><strong>Overview:</strong> De Immaculate Model Academy is an educational institution and exam coaching center located in Ado-Ekiti, Ekiti State, Nigeria.</p>
+        <p><strong>Location Context:</strong> The school is situated along the NTA–Ilawe Bypass Road, directly opposite the Federal Polytechnic Ado-Ekiti Satellite Campus.</p>
+        <p><strong>Academic Focus:</strong> In addition to general educational services, the academy operates a well-regarded coaching center specializing in preparation for major exams like JAMB, WAEC, NECO, and Post-UTME, supported by full boarding facilities and live online sessions.</p>
+        <p><strong>Business Registration:</strong> It is registered in Nigeria as a sole proprietorship under registration number <strong>BN-3359087</strong>, with active status since April 2021.</p>
+        <p><strong>Contact & Admissions Office:</strong> <a href="tel:+2348067047801">+234 806 704 7801</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== VIEW 5: UNIFIED ROLE LOGIN ==================== -->
+  <section id="view-login" class="view-section section-pad bg-light">
+    <div class="container">
+      <div class="auth-card">
+        <div class="role-tabs">
+          <button class="role-tab active" onclick="setLoginRole('student', this)">🎓 Student Login</button>
+          <button class="role-tab" onclick="setLoginRole('tutor', this)">👨‍🏫 Tutor Login</button>
+          <button class="role-tab" onclick="setLoginRole('admin', this)">🛡️ Admin Login</button>
+        </div>
+
+        <h3 id="loginRoleTitle">Student Portal Sign In</h3>
+        <p id="loginRoleHint" class="text-muted">Sign in to access your CBT Exams, AI Study Tutor, Live Classroom & Chat.</p>
+
+        <form onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label>Username or Email</label>
+            <input type="text" id="loginIdentifier" required placeholder="Enter username or email" />
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="loginPassword" required placeholder="Enter password" />
+          </div>
+          <button type="submit" class="btn btn-navy full-w">Sign In to Dashboard</button>
+        </form>
+
+        <div class="quick-demo-box">
+          <p><strong>Quick Demo Access:</strong></p>
+          <div class="demo-btns">
+            <button type="button" class="btn-xs" onclick="fillDemo('student')">Fill Student Demo</button>
+            <button type="button" class="btn-xs" onclick="fillDemo('tutor')">Fill Tutor 1 Demo</button>
+            <button type="button" class="btn-xs" onclick="fillDemo('admin')">Fill Admin Demo</button>
+          </div>
+          <p class="mt-10"><small>New student? <a href="#pricing" onclick="navigateTo('pricing')">Register & view pricing here</a> | Support: <strong>+234 806 704 7801</strong></small></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== VIEW 6: STUDENT DASHBOARD ==================== -->
+  <section id="view-student-dashboard" class="view-section dashboard-wrapper">
+    <div class="dash-topbar">
+      <div class="container dash-top-flex">
+        <div>
+          <span class="badge-gold" id="stuBadgeStream">JAMB • Science</span>
+          <h2 id="stuWelcome">Welcome, Student</h2>
+        </div>
+        <div class="dash-right-meta">
+          <span>📞 Academy Desk: <strong>+234 806 704 7801</strong></span>
+          <button class="btn-xs btn-danger" onclick="logout()">Logout</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container dash-layout">
+      <!-- SIDEBAR -->
+      <aside class="dash-sidebar">
+        <button class="side-btn active" onclick="switchDashTab('stu', 'overview', this)">📊 Dashboard Overview</button>
+        <button class="side-btn" onclick="switchDashTab('stu', 'cbt', this)">📝 CBT Exam Simulator (40–120 Qs)</button>
+        <button class="side-btn" onclick="switchDashTab('stu', 'jamb-archive', this)">📚 JAMB 2022–2026 Archive (120/yr)</button>
+        <button class="side-btn" onclick="switchDashTab('stu', 'ai-tutor', this)">🤖 AI Exam Search & Solver</button>
+        <button class="side-btn" onclick="switchDashTab('stu', 'classroom', this)">🎥 Live Classroom (Video/Voice)</button>
+        <button class="side-btn" onclick="switchDashTab('stu', 'chat', this)">💬 WhatsApp Chat & Voice Notes</button>
+        <button class="side-btn" onclick="switchDashTab('stu', 'notifications', this)">🔔 Notifications <span class="notif-badge" id="stuNotifCount">3</span></button>
+
+        <!-- LIVE ONLINE PRESENCE WIDGET -->
+        <div class="presence-widget">
+          <h4>🟢 Online Now</h4>
+          <div class="presence-list" id="stuPresenceList"></div>
+        </div>
+      </aside>
+
+      <!-- MAIN CONTENT AREA -->
+      <div class="dash-main">
+        <!-- TAB: OVERVIEW -->
+        <div id="stu-tab-overview" class="dash-tab active">
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <span>Selected Exam & Stream</span>
+              <strong id="kpiStuExamStream">JAMB (Science)</strong>
+            </div>
+            <div class="kpi-card">
+              <span>Registered Subjects</span>
+              <strong id="kpiStuSubjects">English, Maths, Physics, Chemistry</strong>
+            </div>
+            <div class="kpi-card">
+              <span>CBT Tests Completed</span>
+              <strong id="kpiStuTestsCount">0</strong>
+            </div>
+            <div class="kpi-card">
+              <span>Average Score</span>
+              <strong id="kpiStuAvgScore">0%</strong>
+            </div>
+          </div>
+
+          <!-- SUBJECT & STREAM CONFIGURATOR -->
+          <div class="panel-card mt-20">
+            <h3>Configure Your Exam Type & Subjects</h3>
+            <div class="form-grid-3">
+              <div class="form-group">
+                <label>Exam Type</label>
+                <select id="dashExamSelect" onchange="syncStudentPreferences()">
+                  <option value="JAMB">JAMB UTME</option>
+                  <option value="WAEC">WAEC SSCE</option>
+                  <option value="NECO">NECO SSCE</option>
+                  <option value="POST-UTME">Post-UTME</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Department / Stream</label>
+                <select id="dashStreamSelect" onchange="syncStudentPreferences()">
+                  <option value="Science">Science</option>
+                  <option value="Art">Art</option>
+                  <option value="Commercial">Commercial</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Session / Boarding Mode</label>
+                <select id="dashModeSelect" onchange="syncStudentPreferences()">
+                  <option value="Online Session">Online Session</option>
+                  <option value="Day Coaching (Ado-Ekiti)">Day Coaching (Ado-Ekiti)</option>
+                  <option value="Full Boarding Facility">Full Boarding Facility</option>
+                </select>
+              </div>
+            </div>
+            <div id="dashSubjectSelector" class="subject-pills mt-10"></div>
+          </div>
+
+          <!-- TUTOR ASSIGNED TESTS & PDF QUIZZES -->
+          <div class="panel-card mt-20">
+            <h3>🆕 New Tests & Tutor-Uploaded PDF Quizzes</h3>
+            <div id="studentAssignedTestsList" class="test-cards-grid"></div>
+          </div>
+        </div>
+
+        <!-- TAB: CBT SIMULATOR -->
+        <div id="stu-tab-cbt" class="dash-tab">
+          <div id="cbtSetupPanel" class="panel-card">
+            <div class="panel-head-flex">
+              <h3>CBT Examination Simulator (40 – 120 Questions)</h3>
+              <button class="btn btn-gold btn-sm" onclick="toggleSciCalc()">🧮 Open Scientific Calculator</button>
+            </div>
+            <div class="form-grid-3 mt-15">
+              <div class="form-group">
+                <label>Examination</label>
+                <select id="cbtExamType">
+                  <option value="JAMB">JAMB UTME</option>
+                  <option value="WAEC">WAEC SSCE</option>
+                  <option value="NECO">NECO SSCE</option>
+                  <option value="POST-UTME">Post-UTME</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Subject / Custom Test</label>
+                <select id="cbtSubjectSelect"></select>
+              </div>
+              <div class="form-group">
+                <label>Number of Questions (40 to 120)</label>
+                <select id="cbtQuestionCount">
+                  <option value="40">40 Questions (45 Mins)</option>
+                  <option value="60">60 Questions (60 Mins)</option>
+                  <option value="80">80 Questions (90 Mins)</option>
+                  <option value="100">100 Questions (105 Mins)</option>
+                  <option value="120" selected>120 Questions (120 Mins - Full Standard)</option>
+                </select>
+              </div>
+            </div>
+            <button class="btn btn-navy mt-15" onclick="startCBTExam()">▶ Start Timed CBT Exam</button>
+          </div>
+
+          <!-- ACTIVE CBT EXAM SCREEN -->
+          <div id="cbtActiveScreen" class="panel-card" style="display:none;">
+            <div class="cbt-header">
+              <div>
+                <h3 id="cbtRunningTitle">JAMB CBT Examination</h3>
+                <span id="cbtRunningSub" class="text-muted">Subject: Mathematics</span>
+              </div>
+              <div class="cbt-controls">
+                <button class="btn btn-outline-navy btn-sm" onclick="toggleSciCalc()">🧮 Scientific Calc</button>
+                <div class="timer-box" id="cbtTimer">02:00:00</div>
+                <button class="btn btn-danger btn-sm" onclick="submitCBTExam()">Submit Exam</button>
+              </div>
+            </div>
+
+            <div class="cbt-question-area">
+              <div class="q-number-badge" id="qNumberBadge">Question 1 of 120</div>
+              <p class="q-text" id="qTextDisplay">Loading question...</p>
+              <div class="options-list" id="qOptionsDisplay"></div>
+            </div>
+
+            <div class="cbt-nav-footer">
+              <button class="btn btn-outline-navy" onclick="prevCBTQuestion()">← Previous</button>
+              <button class="btn btn-navy" onclick="nextCBTQuestion()">Next →</button>
+            </div>
+
+            <div class="question-palette" id="cbtPalette"></div>
+          </div>
+
+          <!-- CBT RESULT SCREEN -->
+          <div id="cbtResultScreen" class="panel-card" style="display:none;">
+            <h3>🎉 Examination Result Summary</h3>
+            <div class="kpi-grid mt-15" id="cbtResultKPIs"></div>
+            <div id="cbtCorrectionsList" class="mt-20"></div>
+            <button class="btn btn-navy mt-15" onclick="resetCBTSetup()">Take Another CBT Exam</button>
+          </div>
+        </div>
+
+        <!-- TAB: JAMB 2022-2026 ARCHIVE (120 QUESTIONS EACH) -->
+        <div id="stu-tab-jamb-archive" class="dash-tab">
+          <div class="panel-card">
+            <h3>📚 JAMB Past Questions Bank (2022 – 2026 • 120 Questions Per Year)</h3>
+            <p class="text-muted">Select any year from 2022 to 2026 to launch a full 120-question session across your chosen stream.</p>
+            <div class="cards-grid-3 mt-15" id="jambYearsGrid"></div>
+          </div>
+        </div>
+
+        <!-- TAB: AI EXAM SEARCH & SOLVER -->
+        <div id="stu-tab-ai-tutor" class="dash-tab">
+          <div class="panel-card">
+            <div class="panel-head-flex">
+              <h3>🤖 DE' Immaculate AI Exam Assistant (JAMB, WAEC & NECO)</h3>
+              <button class="btn btn-outline-navy btn-sm" onclick="toggleSciCalc()">🧮 Scientific Calculator</button>
+            </div>
+            <p class="text-muted">Ask any question across JAMB, WAEC, NECO, or Post-UTME syllabi (Physics, Chemistry, Maths, Biology, English, Literature, Government, Economics, Accounting).</p>
+
+            <div class="ai-search-bar mt-15">
+              <select id="aiExamContext">
+                <option value="JAMB">JAMB UTME</option>
+                <option value="WAEC">WAEC SSCE</option>
+                <option value="NECO">NECO SSCE</option>
+                <option value="POST-UTME">Post-UTME</option>
+              </select>
+              <input type="text" id="aiPromptInput" placeholder="e.g., Explain Ohm's Law, Quadratic formula, Concord rules, Photosynthesis, Supply & Demand..." onkeydown="if(event.key==='Enter') askExamAI()" />
+              <button class="btn btn-gold" onclick="askExamAI()">Ask AI</button>
+            </div>
+
+            <div class="quick-prompts mt-10">
+              <button class="chip-btn" onclick="quickAIPrompt('JAMB Physics: Explain projectile motion formulas and examples')">Projectile Motion</button>
+              <button class="chip-btn" onclick="quickAIPrompt('JAMB English: Rules of Concord and Subject-Verb Agreement')">English Concord</button>
+              <button class="chip-btn" onclick="quickAIPrompt('WAEC Chemistry: Balancing redox reactions and electrolysis')">Electrolysis</button>
+              <button class="chip-btn" onclick="quickAIPrompt('NECO Biology: Mitosis vs Meiosis key differences')">Mitosis vs Meiosis</button>
+              <button class="chip-btn" onclick="quickAIPrompt('JAMB Economics: Elasticity of Demand formulas')">Elasticity of Demand</button>
+            </div>
+
+            <div id="aiChatHistory" class="ai-chat-box mt-15">
+              <div class="ai-msg bot">
+                <strong>DE' Immaculate AI Tutor:</strong> Welcome! Ask me any past question, formula, or topic from JAMB (2022–2026), WAEC, NECO, or Post-UTME for an instant step-by-step explanation.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: LIVE CLASSROOM (VIDEO & VOICE CALLS) -->
+        <div id="stu-tab-classroom" class="dash-tab">
+          <div class="panel-card">
+            <div class="panel-head-flex">
+              <h3>🎥 Interactive Live Classroom (Zoom-Style Video & Voice Call)</h3>
+              <span class="live-pill"><span class="dot"></span> Room Active: Ado-Ekiti Virtual Hall A</span>
+            </div>
+            <div class="video-stage mt-15">
+              <div class="video-tile main-speaker">
+                <video id="localVideoPreview" autoplay muted playsinline></video>
+                <div class="video-overlay-label" id="videoStatusLabel">Camera & Mic Standby — Click Start Video or Voice Call</div>
+              </div>
+              <div class="video-sidebar-tiles">
+                <div class="participant-tile">
+                  <div class="avatar-circle">👨‍🏫</div>
+                  <strong>Mr. Adeyemi (Maths Tutor)</strong>
+                  <span class="status-tag">Speaking • Live</span>
+                </div>
+                <div class="participant-tile">
+                  <div class="avatar-circle">👩‍🏫</div>
+                  <strong>Mrs. Okafor (English Tutor)</strong>
+                  <span class="status-tag">Online</span>
+                </div>
+                <div class="participant-tile">
+                  <div class="avatar-circle">🎓</div>
+                  <strong>Boarding Hall A (14 Students)</strong>
+                  <span class="status-tag">Connected</span>
+                </div>
+              </div>
+            </div>
+            <div class="call-toolbar mt-15">
+              <button class="btn btn-navy" onclick="startMediaCall('video')">📹 Start HD Video Call</button>
+              <button class="btn btn-gold" onclick="startMediaCall('audio')">🎙️ Start Voice Call</button>
+              <button class="btn btn-outline-navy" onclick="toggleScreenShare()">🖥️ Share Screen</button>
+              <button class="btn btn-danger" onclick="stopMediaCall()">📵 End Call</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: WHATSAPP STYLE CHAT & VOICE NOTES -->
+        <div id="stu-tab-chat" class="dash-tab">
+          <div class="panel-card whatsapp-shell">
+            <div class="wa-header">
+              <div>
+                <h3>💬 DE' Immaculate Study Group & Tutor Direct</h3>
+                <small>Instant Messages & Voice Notes • Academic Desk: +234 806 704 7801</small>
+              </div>
+              <select id="chatChannelSelect" onchange="renderChatMessages()">
+                <option value="general">📢 All Students & Tutors Lobby</option>
+                <option value="science">🔬 Science Class Group</option>
+                <option value="art">⚖️ Art Class Group</option>
+                <option value="commercial">📈 Commercial Class Group</option>
+              </select>
+            </div>
+
+            <div id="waMessagesFeed" class="wa-feed"></div>
+
+            <div class="wa-input-bar">
+              <input type="text" id="waTextInput" placeholder="Type a message to tutors or classmates..." onkeydown="if(event.key==='Enter') sendWhatsAppText()" />
+              <button class="btn btn-outline-navy" id="voiceRecordBtn" onclick="toggleVoiceNoteRecord()">🎤 Record Voice Note</button>
+              <button class="btn btn-gold" onclick="sendWhatsAppText()">Send ➤</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: NOTIFICATIONS -->
+        <div id="stu-tab-notifications" class="dash-tab">
+          <div class="panel-card">
+            <h3>🔔 Notifications & Exam Alerts</h3>
+            <div id="stuNotificationsFeed" class="notif-list mt-15"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STUDENT DASHBOARD FOOTER -->
+    <footer class="dash-footer">
+      <div class="container footer-flex">
+        <span>DE' Immaculate Model Academy (BN-3359087) • Ado-Ekiti • 📞 +234 806 704 7801</span>
+        <a href="https://oluwafemoli.github.io/boge-neurovascular-Framework-inteligence/" target="_blank" rel="noopener noreferrer" class="boge-credit">Built by Boge Expression</a>
+      </div>
+    </footer>
+  </section>
+
+  <!-- ==================== VIEW 7: TUTOR DASHBOARD ==================== -->
+  <section id="view-tutor-dashboard" class="view-section dashboard-wrapper">
+    <div class="dash-topbar">
+      <div class="container dash-top-flex">
+        <div>
+          <span class="badge-gold" id="tutorSubjectBadge">Tutor Portal</span>
+          <h2 id="tutorWelcome">Welcome, Tutor</h2>
+        </div>
+        <div class="dash-right-meta">
+          <span>📞 Academy Desk: <strong>+234 806 704 7801</strong></span>
+          <button class="btn-xs btn-danger" onclick="logout()">Logout</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container dash-layout">
+      <aside class="dash-sidebar">
+        <button class="side-btn active" onclick="switchDashTab('tut', 'manual-exam', this)">✍️ Manual Exam Builder</button>
+        <button class="side-btn" onclick="switchDashTab('tut', 'pdf-upload', this)">📄 Upload PDF Auto-Quiz</button>
+        <button class="side-btn" onclick="switchDashTab('tut', 'manage-tests', this)">📋 Published Exams & Results</button>
+        <button class="side-btn" onclick="switchDashTab('tut', 'classroom', this)">🎥 Host Live Class (Video/Voice)</button>
+        <button class="side-btn" onclick="switchDashTab('tut', 'chat', this)">💬 Student Chat & Voice Notes</button>
+        <button class="side-btn" onclick="switchDashTab('tut', 'notifications', this)">🔔 Notifications <span class="notif-badge" id="tutNotifCount">2</span></button>
+
+        <div class="presence-widget">
+          <h4>🟢 Online Students & Tutors</h4>
+          <div class="presence-list" id="tutPresenceList"></div>
+        </div>
+      </aside>
+
+      <div class="dash-main">
+        <!-- TAB 1: MANUAL QUESTION & EXAM SETTER -->
+        <div id="tut-tab-manual-exam" class="dash-tab active">
+          <div class="panel-card">
+            <h3>✍️ Manually Set Exam Questions for Students</h3>
+            <p class="text-muted">Create custom CBT questions for JAMB, WAEC, NECO, or Post-UTME. Published exams immediately appear on the Student Dashboard.</p>
+
+            <div class="form-grid-3 mt-15">
+              <div class="form-group">
+                <label>Exam Title *</label>
+                <input type="text" id="manExamTitle" placeholder="e.g., JAMB 2026 Physics Intensive Mock" />
+              </div>
+              <div class="form-group">
+                <label>Target Exam Type *</label>
+                <select id="manExamType">
+                  <option value="JAMB">JAMB UTME</option>
+                  <option value="WAEC">WAEC SSCE</option>
+                  <option value="NECO">NECO SSCE</option>
+                  <option value="POST-UTME">Post-UTME</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Subject *</label>
+                <select id="manExamSubject">
+                  <option value="Mathematics">Mathematics</option>
+                  <option value="Use of English">Use of English</option>
+                  <option value="Physics">Physics</option>
+                  <option value="Chemistry">Chemistry</option>
+                  <option value="Biology">Biology</option>
+                  <option value="Literature in English">Literature in English</option>
+                  <option value="Government">Government</option>
+                  <option value="Economics">Economics</option>
+                  <option value="Financial Accounting">Financial Accounting</option>
+                  <option value="CRS / IRS">CRS / IRS</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="question-builder-box mt-15">
+              <h4>Add Question to Draft</h4>
+              <div class="form-group">
+                <label>Question Text *</label>
+                <textarea id="manQText" rows="2" placeholder="Enter question prompt..."></textarea>
+              </div>
+              <div class="form-grid-2">
+                <div class="form-group"><label>Option A *</label><input type="text" id="manOptA" /></div>
+                <div class="form-group"><label>Option B *</label><input type="text" id="manOptB" /></div>
+                <div class="form-group"><label>Option C *</label><input type="text" id="manOptC" /></div>
+                <div class="form-group"><label>Option D *</label><input type="text" id="manOptD" /></div>
+              </div>
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label>Correct Option *</label>
+                  <select id="manCorrect">
+                    <option value="0">Option A</option>
+                    <option value="1">Option B</option>
+                    <option value="2">Option C</option>
+                    <option value="3">Option D</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Explanation / Solution</label>
+                  <input type="text" id="manExplanation" placeholder="Brief step-by-step solution" />
+                </div>
+              </div>
+              <button type="button" class="btn btn-outline-navy" onclick="addManualQuestionToDraft()">+ Add Question to Exam Draft</button>
+            </div>
+
+            <div class="mt-15">
+              <h4>Draft Questions (<span id="draftQCount">0</span>)</h4>
+              <div id="draftQuestionsPreview" class="draft-list"></div>
+              <button type="button" class="btn btn-gold mt-15" onclick="publishManualExam()">🚀 Publish Exam to Student Dashboard</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2: PDF AUTO-QUIZ GENERATOR -->
+        <div id="tut-tab-pdf-upload" class="dash-tab">
+          <div class="panel-card">
+            <h3>📄 Upload PDF to Automatically Create & Publish CBT Quiz</h3>
+            <p class="text-muted">Upload any past question PDF. Our parser automatically extracts questions & options and publishes them directly to the selected Subject & Exam Type on the Student Dashboard.</p>
+
+            <div class="form-grid-3 mt-15">
+              <div class="form-group">
+                <label>Quiz / Test Title *</label>
+                <input type="text" id="pdfQuizTitle" placeholder="e.g., 2026 JAMB Chemistry Past Questions PDF" />
+              </div>
+              <div class="form-group">
+                <label>Examination Type *</label>
+                <select id="pdfExamType">
+                  <option value="JAMB">JAMB UTME</option>
+                  <option value="WAEC">WAEC SSCE</option>
+                  <option value="NECO">NECO SSCE</option>
+                  <option value="POST-UTME">Post-UTME</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Target Subject *</label>
+                <select id="pdfSubject">
+                  <option value="Mathematics">Mathematics</option>
+                  <option value="Use of English">Use of English</option>
+                  <option value="Physics">Physics</option>
+                  <option value="Chemistry">Chemistry</option>
+                  <option value="Biology">Biology</option>
+                  <option value="Literature in English">Literature in English</option>
+                  <option value="Government">Government</option>
+                  <option value="Economics">Economics</option>
+                  <option value="Financial Accounting">Financial Accounting</option>
+                  <option value="CRS / IRS">CRS / IRS</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="upload-dropzone mt-15">
+              <input type="file" id="tutorPdfFileInput" accept=".pdf,.txt" onchange="handleTutorPDFUpload(event)" />
+              <p>📂 Select a <strong>.PDF</strong> question bank file to automatically parse and publish as a live student CBT test.</p>
+            </div>
+            <div id="pdfParseStatus" class="mt-15"></div>
+          </div>
+        </div>
+
+        <!-- TAB 3: PUBLISHED EXAMS & STUDENT SCORES -->
+        <div id="tut-tab-manage-tests" class="dash-tab">
+          <div class="panel-card">
+            <h3>📋 Published Exams & Student Submissions</h3>
+            <div id="tutorPublishedList" class="mt-15"></div>
+          </div>
+        </div>
+
+        <!-- TAB 4: LIVE CLASSROOM -->
+        <div id="tut-tab-classroom" class="dash-tab">
+          <div class="panel-card">
+            <h3>🎥 Host Tutor Live Video & Voice Session</h3>
+            <p>Start a live video or audio broadcast for online & boarding students.</p>
+            <div class="call-toolbar mt-15">
+              <button class="btn btn-navy" onclick="alert('Live Tutor Video Classroom started! Students have been notified.')">📹 Launch Live Video Class</button>
+              <button class="btn btn-gold" onclick="alert('Live Audio Lecture started!')">🎙️ Start Audio Lecture</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 5: TUTOR CHAT -->
+        <div id="tut-tab-chat" class="dash-tab">
+          <div class="panel-card">
+            <h3>💬 Direct Student Q&A & Voice Notes</h3>
+            <p>Use the integrated messaging hub to reply to student questions and send voice explanations.</p>
+            <button class="btn btn-navy mt-10" onclick="navigateTo('student-dashboard'); switchDashTab('stu', 'chat', document.querySelector('#view-student-dashboard .side-btn:nth-child(6)'))">Open Unified Live Chat Room</button>
+          </div>
+        </div>
+
+        <!-- TAB 6: NOTIFICATIONS -->
+        <div id="tut-tab-notifications" class="dash-tab">
+          <div class="panel-card">
+            <h3>🔔 Tutor Notifications</h3>
+            <div id="tutNotificationsFeed" class="notif-list mt-15"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== VIEW 8: ADMIN DASHBOARD ==================== -->
+  <section id="view-admin-dashboard" class="view-section dashboard-wrapper">
+    <div class="dash-topbar">
+      <div class="container dash-top-flex">
+        <div>
+          <span class="badge-gold">Proprietor & Director Oversight</span>
+          <h2>DE' Immaculate Admin Control Center</h2>
+        </div>
+        <div class="dash-right-meta">
+          <span>📞 Academy Line: <strong>+234 806 704 7801</strong></span>
+          <button class="btn-xs btn-danger" onclick="logout()">Logout</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container dash-layout">
+      <aside class="dash-sidebar">
+        <button class="side-btn active" onclick="switchDashTab('adm', 'oversight', this)">📊 Academy Oversight</button>
+        <button class="side-btn" onclick="switchDashTab('adm', 'students', this)">🎓 Students & Pass Rates</button>
+        <button class="side-btn" onclick="switchDashTab('adm', 'tutors', this)">👨‍🏫 10 Tutors & Approvals</button>
+        <button class="side-btn" onclick="switchDashTab('adm', 'exams', this)">📝 All CBT Exams & PDFs</button>
+        <button class="side-btn" onclick="switchDashTab('adm', 'notifications', this)">🔔 System Alerts <span class="notif-badge" id="admNotifCount">4</span></button>
+
+        <div class="presence-widget">
+          <h4>🟢 Live Online Users</h4>
+          <div class="presence-list" id="admPresenceList"></div>
+        </div>
+      </aside>
+
+      <div class="dash-main">
+        <!-- TAB 1: ACADEMY OVERSIGHT -->
+        <div id="adm-tab-oversight" class="dash-tab active">
+          <div class="kpi-grid">
+            <div class="kpi-card"><span>Total Enrolled Students</span><strong id="admTotalStudents">0</strong></div>
+            <div class="kpi-card"><span>Active Approved Tutors</span><strong id="admTotalTutors">10</strong></div>
+            <div class="kpi-card"><span>Published Exams & PDFs</span><strong id="admTotalExams">0</strong></div>
+            <div class="kpi-card"><span>Overall CBT Pass Rate</span><strong id="admPassRate">88%</strong></div>
+          </div>
+
+          <div class="panel-card mt-20">
+            <h3>🏆 Student CBT Performance & Pass/Fail Registry</h3>
+            <div class="table-responsive mt-15">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Student Name</th>
+                    <th>Exam & Stream</th>
+                    <th>Subject / Test</th>
+                    <th>Score</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody id="admResultsTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2: STUDENTS APPROVAL & MANAGEMENT -->
+        <div id="adm-tab-students" class="dash-tab">
+          <div class="panel-card">
+            <h3>🎓 Registered Students & Boarding/Online Approvals</h3>
+            <div class="table-responsive mt-15">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email / Phone</th>
+                    <th>Exam & Stream</th>
+                    <th>Plan & Boarding</th>
+                    <th>Approval</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="admStudentsTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 3: 10 TUTORS CREDENTIALS & APPROVALS -->
+        <div id="adm-tab-tutors" class="dash-tab">
+          <div class="panel-card">
+            <h3>👨‍🏫 Faculty Directory (10 Specialist Tutors) & Work Approval</h3>
+            <p class="text-muted">Manage tutor access, view login credentials, and approve tutor-uploaded exams.</p>
+            <div class="table-responsive mt-15">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Tutor Name</th>
+                    <th>Subject</th>
+                    <th>Username / Email</th>
+                    <th>Password</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="admTutorsTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 4: ALL EXAMS & PDF QUIZZES -->
+        <div id="adm-tab-exams" class="dash-tab">
+          <div class="panel-card">
+            <h3>📝 All Manual & PDF-Generated Exams</h3>
+            <div id="admAllExamsList" class="mt-15"></div>
+          </div>
+        </div>
+
+        <!-- TAB 5: ADMIN NOTIFICATIONS -->
+        <div id="adm-tab-notifications" class="dash-tab">
+          <div class="panel-card">
+            <h3>🔔 Administrative Audit & System Notifications</h3>
+            <div id="admNotificationsFeed" class="notif-list mt-15"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FLOATING SCIENTIFIC CALCULATOR MODAL ==================== -->
+  <div id="sciCalcModal" class="sci-calc-modal" style="display:none;">
+    <div class="calc-header">
+      <span>🧮 Scientific Calculator (JAMB/WAEC/NECO)</span>
+      <button onclick="toggleSciCalc()">✖</button>
+    </div>
+    <input type="text" id="calcDisplay" readonly value="0" />
+    <div class="calc-grid">
+      <button onclick="calcFunc('sin')">sin</button>
+      <button onclick="calcFunc('cos')">cos</button>
+      <button onclick="calcFunc('tan')">tan</button>
+      <button onclick="calcFunc('log')">log</button>
+      <button onclick="calcFunc('ln')">ln</button>
+
+      <button onclick="calcFunc('sqrt')">√</button>
+      <button onclick="calcInput('^')">xʸ</button>
+      <button onclick="calcInput('(')">(</button>
+      <button onclick="calcInput(')')">)</button>
+      <button class="btn-warn" onclick="calcClear()">AC</button>
+
+      <button onclick="calcInput('7')">7</button>
+      <button onclick="calcInput('8')">8</button>
+      <button onclick="calcInput('9')">9</button>
+      <button onclick="calcInput('/')">÷</button>
+      <button onclick="calcBackspace()">⌫</button>
+
+      <button onclick="calcInput('4')">4</button>
+      <button onclick="calcInput('5')">5</button>
+      <button onclick="calcInput('6')">6</button>
+      <button onclick="calcInput('*')">×</button>
+      <button onclick="calcInput('Math.PI')">π</button>
+
+      <button onclick="calcInput('1')">1</button>
+      <button onclick="calcInput('2')">2</button>
+      <button onclick="calcInput('3')">3</button>
+      <button onclick="calcInput('-')">−</button>
+      <button onclick="calcFunc('fact')">n!</button>
+
+      <button onclick="calcInput('0')">0</button>
+      <button onclick="calcInput('.')">.</button>
+      <button class="btn-eq" onclick="calcEvaluate()">=</button>
+      <button onclick="calcInput('+')">+</button>
+      <button onclick="calcInput('Math.E')">e</button>
+    </div>
+  </div>
+
+  <!-- ==================== GLOBAL FOOTER ==================== -->
+  <footer class="main-footer">
+    <div class="container footer-grid">
+      <div>
+        <h4>DE' Immaculate Model Academy</h4>
+        <p>Educational Institution & Exam Coaching Centre in Ado-Ekiti, Ekiti State, Nigeria. Registered under CAC <strong>BN-3359087</strong> (Active since April 2021).</p>
+        <p>📍 NTA–Ilawe Bypass Road, directly opposite the Federal Polytechnic Ado-Ekiti Satellite Campus.</p>
+      </div>
+      <div>
+        <h4>Academic Programs</h4>
+        <ul>
+          <li>JAMB UTME Coaching & 2022–2026 CBT (120 Qs/yr)</li>
+          <li>WAEC & NECO O'Level Intensive Classes</li>
+          <li>Post-UTME Screening Preparation</li>
+          <li>Full Boarding & Live Online Sessions</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact & Admissions</h4>
+        <p>📞 Phone / WhatsApp: <a href="tel:+2348067047801"><strong>+234 806 704 7801</strong></a></p>
+        <p>🌐 Portal: dvoltty.github.io/-DE-Immaculate-Model-Academy/</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container footer-flex">
+        <span>© 2026 DE' Immaculate Model Academy (BN-3359087). All Rights Reserved.</span>
+        <a href="https://oluwafemoli.github.io/boge-neurovascular-Framework-inteligence/" target="_blank" rel="noopener noreferrer" class="boge-credit">Built by Boge Expression</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
